@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="13" height="13" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="13" height="13" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="blue_wall" tilewidth="32" tileheight="32">
   <image source="../walls/blue_wall.png" width="32" height="32"/>
  </tileset>
@@ -33,54 +33,49 @@
  <tileset firstgid="11" name="prop_jump" tilewidth="32" tileheight="32">
   <image source="../prop/prop_jump.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="12" name="yellow_door1" tilewidth="32" tileheight="32">
-  <image source="../door/yellow_door1.png" width="32" height="32"/>
- </tileset>
- <tileset firstgid="13" name="skeleton1" tilewidth="32" tileheight="32">
+ <tileset firstgid="12" name="skeleton1" tilewidth="32" tileheight="32">
   <image source="../enemy/primary_enemy/skeleton1.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="14" name="green_slame1" tilewidth="32" tileheight="32">
+ <tileset firstgid="13" name="green_slame1" tilewidth="32" tileheight="32">
   <image source="../enemy/primary_enemy/green_slame1.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="15" name="red_slame1" tilewidth="32" tileheight="32">
+ <tileset firstgid="14" name="red_slame1" tilewidth="32" tileheight="32">
   <image source="../enemy/primary_enemy/red_slame1.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="16" name="skeleton_enhance1" tilewidth="32" tileheight="32">
+ <tileset firstgid="15" name="skeleton_enhance1" tilewidth="32" tileheight="32">
   <image source="../enemy/primary_enemy/skeleton_enhance1.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="17" name="litter_spider1" tilewidth="32" tileheight="32">
+ <tileset firstgid="16" name="litter_spider1" tilewidth="32" tileheight="32">
   <image source="../enemy/primary_enemy/litter_spider1.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="18" name="master1" tilewidth="32" tileheight="32">
+ <tileset firstgid="17" name="master1" tilewidth="32" tileheight="32">
   <image source="../enemy/primary_enemy/master1.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="19" name="down_floor" tilewidth="32" tileheight="32">
+ <tileset firstgid="18" name="down_floor" tilewidth="32" tileheight="32">
   <image source="../floor/down_floor.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="20" name="up_floor" tilewidth="32" tileheight="32">
+ <tileset firstgid="19" name="up_floor" tilewidth="32" tileheight="32">
   <image source="../floor/up_floor.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="21" name="bg_wall" tilewidth="32" tileheight="32">
+ <tileset firstgid="20" name="bg_wall" tilewidth="32" tileheight="32">
   <image source="../walls/bg_wall.png" width="32" height="32"/>
  </tileset>
- <layer name="bg_wall" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjZmBgYCYDkwLIMRufPeji+PQwo9G49GAzA5scIXtwuZWQ2/CFAQiL4jADm33Y7CHkX0L+wWcmqXpIxQCIXwEn
-  </data>
- </layer>
+ <tileset firstgid="21" name="yellow_door1" tilewidth="32" tileheight="32">
+  <image source="../door/yellow_door1.png" width="32" height="32"/>
+ </tileset>
  <layer name="bg" width="13" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYCAPiJKAyTEbnz3o4vj0MBCpB5sZ2OQI2YPLrYTchg7whRsxYY1LDJ8dxIQxIXuI0UMqAABA9AZS
+   eJwTYWBgEBnFo3gQYwCMsw01
   </data>
  </layer>
- <layer name="red_drink" width="13" height="13">
+ <layer name="bg_wall" width="13" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYBjcgH2QmzecADlhQ4/wBAAjkAAd
+   eJydUEEOAAAEauv/f3Y3SmxmQ0kEwEcm8eFWd3pfYdjqhpk4ppm7s2l12pQHF08gdi6c7h/FmWLSLHOzARI=
   </data>
  </layer>
- <layer name="yellow_key" width="13" height="13">
+ <layer name="defense" width="13" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYBi6gHOE208rQI6/aBkWACjAACU=
+   eJxjYBg5gGWgHTAKyAIACYQABQ==
   </data>
  </layer>
  <layer name="attack" width="13" height="13">
@@ -93,14 +88,54 @@
    eJxjYBgFo4C2gI1C/QAEJAAH
   </data>
  </layer>
+ <layer name="yellow_key" width="13" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBi6gHOE208rQI6/aBkWACjAACU=
+  </data>
+ </layer>
+ <layer name="red_drink" width="13" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBjcgH2QmzecADlhQ4/wBAAjkAAd
+  </data>
+ </layer>
  <layer name="jump" width="13" height="13">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo4AywE1j8wEGxAAM
   </data>
  </layer>
- <layer name="down_floor" width="13" height="13">
+ <layer name="up_floor" width="13" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYCAPiJCpbxQMfyBMZfMAOQQAKA==
+   eJxjYCAPCJOpbxSMAlIBADCoABQ=
   </data>
  </layer>
+ <layer name="down_floor" width="13" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo4C6QIjK5gEACEQAEw==
+  </data>
+ </layer>
+ <objectgroup name="yellow_door" width="13" height="13">
+  <object gid="21" x="63" y="287"/>
+  <object gid="21" x="63" y="287"/>
+  <object gid="21" x="63" y="193"/>
+  <object gid="21" x="126" y="131"/>
+  <object gid="21" x="192" y="221"/>
+  <object gid="21" x="287" y="190"/>
+  <object gid="21" x="287" y="190"/>
+  <object gid="21" x="319" y="320"/>
+ </objectgroup>
+ <objectgroup name="little_spider" width="13" height="13">
+  <object gid="16" x="223" y="224"/>
+  <object gid="16" x="287" y="223"/>
+  <object gid="16" x="319" y="352"/>
+ </objectgroup>
+ <objectgroup name="skeleton A" width="13" height="13">
+  <object gid="15" x="61" y="321"/>
+ </objectgroup>
+ <objectgroup name="skeleton B" width="13" height="13">
+  <object gid="12" x="64" y="226"/>
+  <object gid="12" x="63" y="158"/>
+ </objectgroup>
+ <objectgroup name="master" width="13" height="13">
+  <object gid="17" x="252" y="223"/>
+ </objectgroup>
 </map>
