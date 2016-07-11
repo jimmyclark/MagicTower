@@ -24,8 +24,13 @@ function RoomScene:createLeftLayer()
 end
 
 function RoomScene:createMainLayer()
-	local map = cc.TMXTiledMap:create("map/first_floor.tmx");
+	local map = cc.TMXTiledMap:create("map/floor1.tmx");
+	map:setPosition(display.cx ,display.cy)
+	map:setAnchorPoint(cc.p(0.5,0.5));
 	self:addChild(map);
+
+	-- local yelloDoor = map:layerNamed("yello_door");
+	
 
 end
 
