@@ -6,22 +6,22 @@ function BaseProp:ctor()
 	self.m_extraValues = nil; -- 额外属性
 	self.m_showTables = nil; -- 显示数组
 
+	self.m_sprite = nil; -- 精灵
 end
 
 function BaseProp:play()
 	
 end
 
-function BaseProp:show(x,y)
-	if not self.m_showTables then 
-		local prop = UICreator.createImg(self.m_res,true,x,y,32,32);
-		return prop;
-	else
-		print(self.m_showTables.x,self.m_showTables.y)
-		local prop = display.newTilesSprite(self.m_res,cc.rect(self.m_showTables.x,self.m_showTables.y,32,32));
-		prop:pos(x,y);
-		return prop;
+function BaseProp:show(x,y,anchorX,anchorY,root)
+	if not self.m_sprite then 
+		self.m_sprite = display.newSprite(self.m_res .. "1.png");
 	end
+
+	self.m_sprite:pos(x,y);
+	self.m_sprite:setAnchorPoint(anchorX,anchorY);
+	self.m_sprite:addTo(root);
+	return self.m_sprite;
 end
 
 function BaseProp:getValues()

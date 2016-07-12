@@ -2,6 +2,14 @@ local RoomScene = class("RoomScene",function()
 	return display.newScene("RoomScene");
 end)
 
+LittleSpider = require("app.entity.LittleSpider");
+YellowKey = require("app.entity.YelloKey");
+Master = require("app.entity.Master");
+RedSlime = require("app.entity.RedSlime")
+GreenSlime = require("app.entity.GreenSlime")
+SkeletonA = require("app.entity.SkeletonA")
+SkeletonB = require("app.entity.SkeletonB")
+
 function RoomScene:ctor()
 	self:createLeftLayer();
 
@@ -29,9 +37,54 @@ function RoomScene:createMainLayer()
 	map:setAnchorPoint(cc.p(0.5,0.5));
 	self:addChild(map);
 
-	-- local yelloDoor = map:layerNamed("yello_door");
-	
+	-- 初始化黄色的门
+	local yelloDoors = map:getObjectGroup("yellow_door"):getObjects();
 
+	for _,values in pairs(yelloDoors) do 
+		local yellowKey = YellowKey.new();
+		yellowKey:show(values.x,values.y,0,0,map);
+	end
+
+	-- 初始化怪物
+	local spiders = map:getObjectGroup("little_spider"):getObjects();
+	for _,values in pairs(spiders) do 
+		local little_spider = LittleSpider.new();
+		little_spider:show(values.x,values.y,0,0,map);
+	end
+
+	-- master
+	local masters = map:getObjectGroup("master"):getObjects();
+	for _,values in pairs(masters) do 
+		local master = Master.new();
+		master:show(values.x,values.y,0,0,map);
+	end
+
+	-- red slime
+	local redslimes = map:getObjectGroup("red_slime"):getObjects();
+	for _,values in pairs(redslimes) do 
+		local redslime = RedSlime.new();
+		redslime:show(values.x,values.y,0,0,map);
+	end
+
+	-- green slime
+	local greenslimes = map:getObjectGroup("green_slime"):getObjects();
+	for _,values in pairs(greenslimes) do 
+		local redslime = GreenSlime.new();
+		redslime:show(values.x,values.y,0,0,map);
+	end
+
+	-- skeleton
+	local skeletons = map:getObjectGroup("skeleton A"):getObjects();
+	for _,values in pairs(skeletons) do 
+		local skeletonA = SkeletonA.new();
+		skeletonA:show(values.x,values.y,0,0,map);
+	end
+
+	local skeletonBs = map:getObjectGroup("skeleton B"):getObjects();
+	for _,values in pairs(skeletonBs) do 
+		local skeletonB = SkeletonB.new();
+		skeletonB:show(values.x,values.y,0,0,map);
+	end
 end
 
 function RoomScene:onEnter()

@@ -1,12 +1,12 @@
 -- 小蝙蝠Bat
 local Enemy = require("app.entity.Enemy");
 
-local LittleSpider = class("LittleSpider",Enemy);
+local Master = class("Master",Enemy);
 
-function LittleSpider:ctor()
-	LittleSpider.super:ctor();
+function Master:ctor()
+	Master.super:ctor();
 
-	self.m_res_anims = "primary_enemy/litter_spider";
+	self.m_res_anims = "primary_enemy/master";
 
 	self.m_attack = 20 -- 攻击力
 	self.m_defense = 5; -- 防御力
@@ -14,4 +14,4 @@ function LittleSpider:ctor()
 	self.m_life = 100; -- 生命
 end
 
-return LittleSpider;
+return Master;

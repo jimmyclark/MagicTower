@@ -63,6 +63,12 @@
  <tileset firstgid="21" name="yellow_door1" tilewidth="32" tileheight="32">
   <image source="../door/yellow_door1.png" width="32" height="32"/>
  </tileset>
+ <tileset firstgid="22" name="red_slame1" tilewidth="32" tileheight="32">
+  <image source="../enemy/primary_enemy/red_slame1.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="23" name="green_slame1" tilewidth="32" tileheight="32">
+  <image source="../enemy/primary_enemy/green_slame1.png" width="32" height="32"/>
+ </tileset>
  <layer name="bg" width="13" height="13">
   <data encoding="base64" compression="zlib">
    eJwTYWBgEBnFo3gQYwCMsw01
@@ -137,5 +143,14 @@
  </objectgroup>
  <objectgroup name="master" width="13" height="13">
   <object gid="17" x="252" y="223"/>
+ </objectgroup>
+ <objectgroup name="red_slime" width="13" height="13">
+  <object gid="22" x="128" y="65"/>
+ </objectgroup>
+ <objectgroup name="green_slime" width="13" height="13">
+  <object gid="23" x="94" y="64"/>
+  <object gid="23" x="160" y="66"/>
+  <object gid="23" x="289" y="384"/>
+  <object gid="23" x="350" y="386"/>
  </objectgroup>
 </map>

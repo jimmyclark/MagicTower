@@ -4,6 +4,9 @@ function Person:ctor()
 	self.m_id = 0 ; -- 人物id
 	self.m_res = ""; -- 物品资源路径
 
+	self.m_sprite = nil;	-- 动物精灵
+	self.m_isPlaying = false; -- 是否在动画
+
 	self.m_life = 0; -- 血
 	self.m_attack = 0; -- 攻击力
 	self.m_defense = 0; -- 防御力
@@ -19,8 +22,8 @@ function Person:play()
 	
 end
 
-function Person:show(x,y)
-	
+function Person:show(x,y,anchorX,anchorY,root)
+
 end
 
 return Person;
