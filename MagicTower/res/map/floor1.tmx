@@ -69,9 +69,12 @@
  <tileset firstgid="23" name="green_slame1" tilewidth="32" tileheight="32">
   <image source="../enemy/primary_enemy/green_slame1.png" width="32" height="32"/>
  </tileset>
+ <tileset firstgid="24" name="actor_down1" tilewidth="32" tileheight="32">
+  <image source="../actors/actor_down1.png" width="32" height="32"/>
+ </tileset>
  <layer name="bg" width="13" height="13">
   <data encoding="base64" compression="zlib">
-   eJwTYWBgEBnFo3gQYwCMsw01
+   eJxjYCAPiJCAyTGbFHvw6cFlBroebGZgk6PUHkJuIGQ/LnvQwxqXGCE7CIUxPnuI1UMqAABLbAZp
   </data>
  </layer>
  <layer name="bg_wall" width="13" height="13">
@@ -114,43 +117,126 @@
    eJxjYCAPCJOpbxSMAlIBADCoABQ=
   </data>
  </layer>
+ <objectgroup name="yellow_door" width="13" height="13">
+  <object gid="21" x="320" y="320"/>
+  <object gid="21" x="64" y="288"/>
+  <object gid="21" x="64" y="192"/>
+  <object gid="21" x="128" y="128"/>
+  <object gid="21" x="192" y="224"/>
+  <object gid="21" x="288" y="192"/>
+ </objectgroup>
  <layer name="down_floor" width="13" height="13">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo4C6QIjK5gEACEQAEw==
   </data>
  </layer>
- <objectgroup name="yellow_door" width="13" height="13">
-  <object gid="21" x="63" y="287"/>
-  <object gid="21" x="63" y="287"/>
-  <object gid="21" x="63" y="193"/>
-  <object gid="21" x="126" y="131"/>
-  <object gid="21" x="192" y="221"/>
-  <object gid="21" x="287" y="190"/>
-  <object gid="21" x="287" y="190"/>
-  <object gid="21" x="319" y="320"/>
- </objectgroup>
- <objectgroup name="little_spider" width="13" height="13">
-  <object gid="16" x="223" y="224"/>
-  <object gid="16" x="287" y="223"/>
-  <object gid="16" x="319" y="352"/>
- </objectgroup>
+ <layer name="skeleton B" width="13" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBiegGeY2TOSAQAo5AAZ
+  </data>
+ </layer>
  <objectgroup name="skeleton A" width="13" height="13">
   <object gid="15" x="61" y="321"/>
  </objectgroup>
- <objectgroup name="skeleton B" width="13" height="13">
-  <object gid="12" x="64" y="226"/>
-  <object gid="12" x="63" y="158"/>
- </objectgroup>
- <objectgroup name="master" width="13" height="13">
-  <object gid="17" x="252" y="223"/>
- </objectgroup>
- <objectgroup name="red_slime" width="13" height="13">
-  <object gid="22" x="128" y="65"/>
+ <objectgroup name="litter_spider" width="13" height="13">
+  <object gid="16" x="224" y="224"/>
+  <object gid="16" x="288" y="224"/>
+  <object gid="16" x="320" y="352"/>
  </objectgroup>
  <objectgroup name="green_slime" width="13" height="13">
-  <object gid="23" x="94" y="64"/>
-  <object gid="23" x="160" y="66"/>
-  <object gid="23" x="289" y="384"/>
-  <object gid="23" x="350" y="386"/>
+  <object gid="13" x="96" y="64"/>
+  <object gid="13" x="160" y="64"/>
+  <object gid="13" x="288" y="384"/>
+  <object gid="13" x="352" y="384"/>
+ </objectgroup>
+ <objectgroup name="red_slime" width="13" height="13">
+  <object gid="14" x="128" y="64"/>
+ </objectgroup>
+ <objectgroup name="master" width="13" height="13">
+  <object gid="17" x="256" y="224"/>
+ </objectgroup>
+ <objectgroup name="track" width="13" height="13">
+  <object gid="24" x="32" y="64"/>
+  <object gid="24" x="32" y="64"/>
+  <object gid="24" x="64" y="64"/>
+  <object gid="24" x="96" y="64"/>
+  <object gid="24" x="128" y="64"/>
+  <object gid="24" x="160" y="64"/>
+  <object gid="24" x="192" y="64"/>
+  <object gid="24" x="224" y="64"/>
+  <object gid="24" x="256" y="64"/>
+  <object gid="24" x="288" y="64"/>
+  <object gid="24" x="320" y="64"/>
+  <object gid="24" x="352" y="64"/>
+  <object gid="24" x="352" y="96"/>
+  <object gid="24" x="352" y="128"/>
+  <object gid="24" x="352" y="160"/>
+  <object gid="24" x="352" y="192"/>
+  <object gid="24" x="352" y="224"/>
+  <object gid="24" x="352" y="256"/>
+  <object gid="24" x="352" y="288"/>
+  <object gid="24" x="320" y="288"/>
+  <object gid="24" x="288" y="288"/>
+  <object gid="24" x="256" y="288"/>
+  <object gid="24" x="224" y="288"/>
+  <object gid="24" x="192" y="288"/>
+  <object gid="24" x="160" y="288"/>
+  <object gid="24" x="160" y="288"/>
+  <object gid="24" x="160" y="256"/>
+  <object gid="24" x="160" y="224"/>
+  <object gid="24" x="160" y="192"/>
+  <object gid="24" x="160" y="160"/>
+  <object gid="24" x="160" y="128"/>
+  <object gid="24" x="160" y="128"/>
+  <object gid="24" x="288" y="128"/>
+  <object gid="24" x="288" y="160"/>
+  <object gid="24" x="256" y="160"/>
+  <object gid="24" x="224" y="160"/>
+  <object gid="24" x="224" y="128"/>
+  <object gid="24" x="256" y="128"/>
+  <object gid="24" x="288" y="192"/>
+  <object gid="24" x="288" y="224"/>
+  <object gid="24" x="256" y="224"/>
+  <object gid="24" x="224" y="224"/>
+  <object gid="24" x="288" y="352"/>
+  <object gid="24" x="320" y="352"/>
+  <object gid="24" x="352" y="352"/>
+  <object gid="24" x="352" y="384"/>
+  <object gid="24" x="320" y="384"/>
+  <object gid="24" x="288" y="384"/>
+  <object gid="24" x="224" y="352"/>
+  <object gid="24" x="224" y="384"/>
+  <object gid="24" x="192" y="352"/>
+  <object gid="24" x="192" y="352"/>
+  <object gid="24" x="160" y="352"/>
+  <object gid="24" x="160" y="384"/>
+  <object gid="24" x="192" y="320"/>
+  <object gid="24" x="320" y="320"/>
+  <object gid="24" x="96" y="320"/>
+  <object gid="24" x="96" y="352"/>
+  <object gid="24" x="96" y="384"/>
+  <object gid="24" x="64" y="384"/>
+  <object gid="24" x="64" y="384"/>
+  <object gid="24" x="32" y="384"/>
+  <object gid="24" x="32" y="352"/>
+  <object gid="24" x="32" y="320"/>
+  <object gid="24" x="64" y="320"/>
+  <object gid="24" x="64" y="352"/>
+  <object gid="24" x="64" y="288"/>
+  <object gid="24" x="64" y="256"/>
+  <object gid="24" x="32" y="256"/>
+  <object gid="24" x="96" y="256"/>
+  <object gid="24" x="96" y="224"/>
+  <object gid="24" x="64" y="224"/>
+  <object gid="24" x="32" y="224"/>
+  <object gid="24" x="64" y="192"/>
+  <object gid="24" x="64" y="160"/>
+  <object gid="24" x="32" y="160"/>
+  <object gid="24" x="32" y="128"/>
+  <object gid="24" x="64" y="128"/>
+  <object gid="24" x="96" y="128"/>
+  <object gid="24" x="96" y="160"/>
+  <object gid="24" x="128" y="128"/>
+  <object gid="24" x="192" y="224"/>
  </objectgroup>
 </map>
