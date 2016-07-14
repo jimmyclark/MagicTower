@@ -22,7 +22,7 @@ function Person:play()
 	
 end
 
-function Person:show(x,y,anchorX,anchorY,root)
+function Person:show(x,y,anchorX,anchorY,root,direction)
 
 end
 

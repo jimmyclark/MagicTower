@@ -10,6 +10,8 @@ GreenSlime = require("app.entity.GreenSlime")
 SkeletonA = require("app.entity.SkeletonA")
 SkeletonB = require("app.entity.SkeletonB")
 
+Player = require("app.entity.Player")
+
 function RoomScene:ctor()
 	self:createLeftLayer();
 
@@ -46,7 +48,7 @@ function RoomScene:createMainLayer()
 	end
 
 	-- 初始化怪物
-	local spiders = map:getObjectGroup("little_spider"):getObjects();
+	local spiders = map:getObjectGroup("litter_spider"):getObjects();
 	for _,values in pairs(spiders) do 
 		local little_spider = LittleSpider.new();
 		little_spider:show(values.x,values.y,0,0,map);
@@ -85,6 +87,28 @@ function RoomScene:createMainLayer()
 		local skeletonB = SkeletonB.new();
 		skeletonB:show(values.x,values.y,0,0,map);
 	end
+
+	-- 绘制精灵
+	local players = map:getObjectGroup("track"):getObjects();
+
+	self.m_playerSprite = {};
+
+	for i = 1 , #players do 
+		local player = Player.new();
+		self.m_playerSprite[i] = player:show(players[i].x,players[i].y,0,0,map,"up");
+		self.m_playerSprite[i]:setVisible(false);
+	-- 	local values = players[i]
+	-- 	local downSprite = display.newSprite("actors/actor_down1.png");
+	-- 	downSprite:pos(values.x,values.y);
+	-- 	downSprite:setAnchorPoint(cc.p(0.5,0.5))
+	-- 	downSprite:addTo(map);
+
+
+		-- skeletonB:show(values.x,values.y,0,0,map);
+	end
+
+	self.m_playerSprite[62]:setVisible(true);
+
 end
 
 function RoomScene:onEnter()
