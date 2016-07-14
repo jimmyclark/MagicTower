@@ -13,6 +13,8 @@ SkeletonB = require("app.entity.SkeletonB")
 Player = require("app.entity.Player")
 
 function RoomScene:ctor()
+	self.m_startSpriteIndex = 65;
+
 	self:createLeftLayer();
 
 	self:createMainLayer();
@@ -97,17 +99,9 @@ function RoomScene:createMainLayer()
 		local player = Player.new();
 		self.m_playerSprite[i] = player:show(players[i].x,players[i].y,0,0,map,"up");
 		self.m_playerSprite[i]:setVisible(false);
-	-- 	local values = players[i]
-	-- 	local downSprite = display.newSprite("actors/actor_down1.png");
-	-- 	downSprite:pos(values.x,values.y);
-	-- 	downSprite:setAnchorPoint(cc.p(0.5,0.5))
-	-- 	downSprite:addTo(map);
-
-
-		-- skeletonB:show(values.x,values.y,0,0,map);
 	end
 
-	self.m_playerSprite[62]:setVisible(true);
+	self.m_playerSprite[self.m_startSpriteIndex]:setVisible(true);
 
 end
 
