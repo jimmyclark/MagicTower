@@ -130,11 +130,6 @@
    eJxjYBgFo4C6QIjK5gEACEQAEw==
   </data>
  </layer>
- <layer name="skeleton B" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBiegGeY2TOSAQAo5AAZ
-  </data>
- </layer>
  <objectgroup name="skeleton A" width="13" height="13">
   <object gid="15" x="61" y="321"/>
  </objectgroup>
@@ -238,5 +233,9 @@
   <object gid="24" x="96" y="160"/>
   <object gid="24" x="128" y="128"/>
   <object gid="24" x="192" y="224"/>
+ </objectgroup>
+ <objectgroup name="skeleton B" width="13" height="13">
+  <object gid="12" x="64" y="224"/>
+  <object gid="12" x="64" y="160"/>
  </objectgroup>
 </map>
