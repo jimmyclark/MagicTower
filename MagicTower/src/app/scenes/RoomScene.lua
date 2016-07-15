@@ -129,17 +129,19 @@ function RoomScene:createMainLayer()
 	-- 绘制精灵
 	local players = map:getObjectGroup("track"):getObjects();
 
-	self.m_playerSprite = {};
+	-- self.m_playerSprite = {};
 
-	for i = 1 , #players do 
+	for _,v in pairs(players) do 
 		local player = Player.new();
-		self.m_playerSprite[i] = player:show(players[i].x,players[i].y,0,0,map,"up");
-		self.m_spriteW = players[i].width;
-		self.m_spriteH = players[i].height;
-		self.m_playerSprite[i]:setVisible(false);
+		self.m_playerSprite = player:show(v.x,v.y,0,0,map,"up");
+		self.m_spriteX = v.x;
+		self.m_spriteY = v.y;
+		self.m_spriteW = self.m_playerSprite:getContentSize().width;
+		self.m_spriteH = self.m_playerSprite:getContentSize().height;
+		self.m_playerSprite:setVisible(false);
 	end
 
-	self.m_playerSprite[self.m_startSpriteIndex]:setVisible(true);
+	self.m_playerSprite:setVisible(true);
 
 end
 
@@ -152,9 +154,8 @@ function RoomScene:dtor()
 end
 
 function RoomScene:onLeftResponse()
-	print("<--")
-	local leftAction = cc.MoveBy:create(2,cc.p(self.m_spriteW,0));
-	self.m_playerSprite[self.m_startSpriteIndex]:runAction(leftAction);
+	local leftAction = cc.MoveBy:create(1,cc.p(-self.m_spriteW,0));
+	self.m_playerSprite:runAction(leftAction);
 end
 
 function RoomScene:onRightResponse()

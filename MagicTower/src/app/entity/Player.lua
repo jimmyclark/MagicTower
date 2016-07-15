@@ -4,7 +4,6 @@ local Player = class("Player",Person);
 
 function Player:ctor()
 	Player.super:ctor();
-	self.m_res_anims = "";
 
 	self.m_upPlayerFile = "actor_up";
 	self.m_downPlayerFile = "actor_down";
@@ -15,6 +14,9 @@ function Player:ctor()
 	self.m_rightId = 1;
 	self.m_downId = 1;
 	self.m_leftId = 1;
+
+	self.m_spriteW = 0;
+	self.m_spriteH = 0;
 end
 
 -- 帧动画
@@ -39,9 +41,40 @@ function Player:show(x,y,anchorX,anchorY,root,direction)
 	self.m_sprite:setAnchorPoint(anchorX,anchorY);
 	self.m_sprite:pos(x,y);
 	self.m_sprite:addTo(root);
+
+	self.m_spriteW = self.m_sprite:getContentSize().width;
+	self.m_spriteH = self.m_sprite:getContentSize().height;
+
 	return self.m_sprite;
 end
 
 
+function Player:getWidth()
+	return self.m_spriteW;
+end
+
+function Player:getHeight()
+	return self.m_spriteH;
+end
+
+function Player:onLeftClick()
+	local action = cc.MoveTo:create(1,cc.p(-self.m_spriteW,0));
+	self.m_sprite:runAction(action);
+end
+
+function Player:onRightClick()
+	local action = cc.MoveTo:create(1,cc.p(self.m_spriteW,0));
+	self.m_sprite:runAction(action);
+end
+
+function Player:onUpClick()
+	local action = cc.MoveTo:create(1,cc.p(0,self.m_spriteH));
+	self.m_sprite:runAction(action);
+end
+
+function Player:onDownClick()
+	local action = cc.MoveTo:create(1,cc.p(0,-self.m_spriteH));
+	self.m_sprite:runAction(action);
+end
 
 return Player;	
