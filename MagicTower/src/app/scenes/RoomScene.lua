@@ -33,6 +33,42 @@ function RoomScene:createLeftLayer()
 	local layer = display.newColorLayer(cc.c4b(0x8B,0x8B,0xBB, 255));
 	layer:addTo(self);
 
+	layer:setTouchEnabled(true);
+
+	layer:setTouchMode(cc.TOUCH_MODE_ONE_BY_ONE);
+	layer:addNodeEventListener(cc.NODE_TOUCH_EVENT,function(event)
+		if event.name == "began" then 
+			self.lastX = event.x;
+			self.lastY = event.y;
+			return true;
+
+		elseif event.name == "ended" then
+			if math.abs(event.x - self.lastX) <= 800 * display.contentScaleFactor  then 
+				if event.y - self.lastY > 30 then
+					self:onUpResponse();
+
+				elseif self.lastY - event.y > 30 then 
+					self:onDownResponse();
+				end
+			end
+
+			if math.abs(event.y - self.lastY) <= 800 * display.contentScaleFactor then
+				if event.x - self.lastX > 30 then 
+					self:onRightResponse();
+				elseif self.lastX - event.x > 30 then 
+					self:onLeftResponse();
+				end
+			end
+
+			return true;
+		end
+	end);
+
+	layer:setKeypadEnabled(true);
+	self:addNodeEventListener(cc.KEYPAD_EVENT,function(event)
+		print("event.key" .. event.key)
+	end);
+
 end
 
 function RoomScene:createMainLayer()
@@ -98,6 +134,8 @@ function RoomScene:createMainLayer()
 	for i = 1 , #players do 
 		local player = Player.new();
 		self.m_playerSprite[i] = player:show(players[i].x,players[i].y,0,0,map,"up");
+		self.m_spriteW = players[i].width;
+		self.m_spriteH = players[i].height;
 		self.m_playerSprite[i]:setVisible(false);
 	end
 
@@ -111,6 +149,24 @@ end
 
 function RoomScene:dtor()
 
+end
+
+function RoomScene:onLeftResponse()
+	print("<--")
+	local leftAction = cc.MoveBy:create(2,cc.p(self.m_spriteW,0));
+	self.m_playerSprite[self.m_startSpriteIndex]:runAction(leftAction);
+end
+
+function RoomScene:onRightResponse()
+	print("-->")
+end
+
+function RoomScene:onUpResponse()
+	print("up")
+end
+
+function RoomScene:onDownResponse()
+	print("down")
 end
 
 return RoomScene;
