@@ -17,6 +17,12 @@ function Player:ctor()
 
 	self.m_spriteW = 0;
 	self.m_spriteH = 0;
+
+	self.m_isPlaying = false; -- 是否在动
+
+	self.m_moveTime = 0.5; -- 移动时间
+
+	self.m_direction = "up"; -- 向上
 end
 
 -- 帧动画
@@ -45,6 +51,8 @@ function Player:show(x,y,anchorX,anchorY,root,direction)
 	self.m_spriteW = self.m_sprite:getContentSize().width;
 	self.m_spriteH = self.m_sprite:getContentSize().height;
 
+	self.m_direction = direction;
+
 	return self.m_sprite;
 end
 
@@ -58,23 +66,127 @@ function Player:getHeight()
 end
 
 function Player:onLeftClick()
-	local action = cc.MoveTo:create(1,cc.p(-self.m_spriteW,0));
-	self.m_sprite:runAction(action);
+	if self.m_isPlaying then 
+		return;
+	end
+	self.m_isPlaying = true;
+
+	print(self.m_rightId %2 , self.m_direction)
+
+	if (self.m_rightId % 2 ~= 0) and self.m_direction == "right" or 
+	   (self.m_upId % 2 ~= 0)    and self.m_direction == "up" or 
+	   (self.m_downId % 2 ~= 0)  and self.m_direction == "down" then 
+		self.m_leftId = 1;
+
+	elseif self.m_direction ~= "left" then 
+		self.m_leftId = 2;
+	end
+
+	self.m_direction = "left";
+
+	local action = cc.MoveBy:create(self.m_moveTime,cc.p(-self.m_spriteW,0));
+	self.m_sprite:setTexture("actors/" .. self.m_leftPlayerFile .. self.m_leftId .. ".png");
+	local callFunc = cc.CallFunc:create(function()
+		self.m_leftId = self.m_leftId + 1;
+		if self.m_leftId > 4 then 
+			self.m_leftId = 1;
+		end
+		self.m_isPlaying = false;
+	end);
+	self.m_sprite:runAction(cc.Sequence:create(action,callFunc));
+
 end
 
 function Player:onRightClick()
-	local action = cc.MoveTo:create(1,cc.p(self.m_spriteW,0));
-	self.m_sprite:runAction(action);
+	if self.m_isPlaying then 
+		return;
+	end
+
+	self.m_isPlaying = true;
+
+	print(self.m_leftId %2 , self.m_direction)
+
+	if (self.m_leftId % 2 ~= 0) and self.m_direction == "left" or 
+		(self.m_upId % 2 ~= 0)  and self.m_direction == "up" or 
+		(self.m_downId % 2 ~= 0) and self.m_direction == "down" then 
+		self.m_rightId = 1;
+
+	elseif self.m_direction ~= "right" then 
+		self.m_rightId = 2;
+	end
+
+	self.m_direction = "right";
+	local action = cc.MoveBy:create(self.m_moveTime,cc.p(self.m_spriteW,0));
+	self.m_sprite:setTexture("actors/" .. self.m_rightPlayerFile .. self.m_rightId .. ".png");
+	local callFunc = cc.CallFunc:create(function()
+		self.m_rightId = self.m_rightId + 1;
+		if self.m_rightId > 4 then 
+			self.m_rightId = 1;
+		end
+		self.m_isPlaying = false;
+	end);
+	self.m_sprite:runAction(cc.Sequence:create(action,callFunc));
 end
 
 function Player:onUpClick()
-	local action = cc.MoveTo:create(1,cc.p(0,self.m_spriteH));
-	self.m_sprite:runAction(action);
+	if self.m_isPlaying then
+		return;
+	end
+	self.m_isPlaying = true;
+
+	if (self.m_leftId % 2 ~= 0) and self.m_direction == "left" or 
+		(self.m_rightId % 2 ~= 0) and self.m_direction == "right" or 
+		(self.m_downId % 2 ~= 0) and self.m_direction == "down" then 
+		self.m_upId = 1;
+
+	elseif self.m_direction ~= "up" then 
+		self.m_upId = 2;
+	end
+
+	self.m_direction = "up";
+	local action = cc.MoveBy:create(self.m_moveTime,cc.p(0,self.m_spriteH));
+	self.m_sprite:setTexture("actors/" .. self.m_upPlayerFile .. self.m_upId .. ".png");
+	local callFunc = cc.CallFunc:create(function()
+		self.m_upId = self.m_upId + 1;
+		if self.m_upId > 4 then 
+			self.m_upId = 1;
+		end
+		self.m_isPlaying = false;
+	end);
+	self.m_sprite:runAction(cc.Sequence:create(action,callFunc));
 end
 
 function Player:onDownClick()
-	local action = cc.MoveTo:create(1,cc.p(0,-self.m_spriteH));
-	self.m_sprite:runAction(action);
+	if self.m_isPlaying then 
+		return;
+	end
+	self.m_isPlaying = true;
+
+	if (self.m_leftId % 2 ~= 0) and self.m_direction == "left" or 
+		(self.m_rightId % 2 ~= 0) and self.m_direction == "right" or 
+		(self.m_upId % 2 ~= 0) and self.m_direction == "up" then 
+		self.m_downId = 1;
+
+	elseif self.m_direction ~= "down" then 
+		self.m_downId = 2;
+	end
+
+	self.m_direction = "down";
+	local action = cc.MoveBy:create(self.m_moveTime,cc.p(0,-self.m_spriteH));
+	self.m_sprite:setTexture("actors/" .. self.m_downPlayerFile .. self.m_downId .. ".png");
+	local callFunc = cc.CallFunc:create(function()
+		self.m_downId = self.m_downId + 1;
+		if self.m_downId > 4 then 
+			self.m_downId = 1;
+		end
+		self.m_isPlaying = false;
+	end);
+	self.m_sprite:runAction(cc.Sequence:create(action,callFunc));
+end
+
+function Player:clearAllDirections()
+	
+
 end
 
 return Player;	

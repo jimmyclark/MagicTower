@@ -132,16 +132,9 @@ function RoomScene:createMainLayer()
 	-- self.m_playerSprite = {};
 
 	for _,v in pairs(players) do 
-		local player = Player.new();
-		self.m_playerSprite = player:show(v.x,v.y,0,0,map,"up");
-		self.m_spriteX = v.x;
-		self.m_spriteY = v.y;
-		self.m_spriteW = self.m_playerSprite:getContentSize().width;
-		self.m_spriteH = self.m_playerSprite:getContentSize().height;
-		self.m_playerSprite:setVisible(false);
+		self.m_player = Player.new();
+		self.m_playerSprite = self.m_player:show(v.x,v.y,0,0,map,"up");
 	end
-
-	self.m_playerSprite:setVisible(true);
 
 end
 
@@ -154,20 +147,19 @@ function RoomScene:dtor()
 end
 
 function RoomScene:onLeftResponse()
-	local leftAction = cc.MoveBy:create(1,cc.p(-self.m_spriteW,0));
-	self.m_playerSprite:runAction(leftAction);
+	self.m_player:onLeftClick();
 end
 
 function RoomScene:onRightResponse()
-	print("-->")
+	self.m_player:onRightClick();
 end
 
 function RoomScene:onUpResponse()
-	print("up")
+	self.m_player:onUpClick();
 end
 
 function RoomScene:onDownResponse()
-	print("down")
+	self.m_player:onDownClick();
 end
 
 return RoomScene;
