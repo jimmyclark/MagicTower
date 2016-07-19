@@ -2,6 +2,7 @@ local RoomScene = class("RoomScene",function()
 	return display.newScene("RoomScene");
 end)
 
+Road = require("app.entity.Road");
 LittleSpider = require("app.entity.LittleSpider");
 YellowKey = require("app.entity.YelloKey");
 Master = require("app.entity.Master");
@@ -77,6 +78,15 @@ function RoomScene:createMainLayer()
 	map:setAnchorPoint(cc.p(0.5,0.5));
 	self:addChild(map);
 
+	self.m_walls = {};
+
+	local road = map:getObjectGroup("bg_wall"):getObjects();
+	for _,values in pairs(road) do
+		local road = Road.new();
+		road:show(values.x,values.y,0,0,map);
+		self.m_walls[values.x*values.y] = 1;
+	end	
+
 	-- 初始化黄色的门
 	local yelloDoors = map:getObjectGroup("yellow_door"):getObjects();
 
@@ -147,19 +157,35 @@ function RoomScene:dtor()
 end
 
 function RoomScene:onLeftResponse()
+	local x,y = self.m_player:getCurrentPos();
+	local w,h = self.m_player:getWidthHeight();
+	print(x,y,w,h);
+	print("aaa")
+	for k,v in pairs(self.m_walls) do 
+		print(k,v)
+	end
+
+	if self.m_walls[(x-w)*y] == 1 then 
+		return;
+	end
 	self.m_player:onLeftClick();
+	print(self.m_player:getWidthHeight(),self.m_player:getCurrentPos())
 end
 
 function RoomScene:onRightResponse()
 	self.m_player:onRightClick();
+	print(self.m_player:getWidthHeight(),self.m_player:getCurrentPos())
 end
 
 function RoomScene:onUpResponse()
 	self.m_player:onUpClick();
+	print(self.m_player:getWidthHeight(),self.m_player:getCurrentPos())
 end
 
 function RoomScene:onDownResponse()
 	self.m_player:onDownClick();
+
+	print(self.m_player:getWidthHeight(),self.m_player:getCurrentPos())
 end
 
 return RoomScene;
