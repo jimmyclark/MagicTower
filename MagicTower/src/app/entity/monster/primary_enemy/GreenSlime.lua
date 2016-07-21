@@ -1,5 +1,5 @@
 -- GreenSlime
-local Enemy = require("app.entity.Enemy");
+local Enemy = require("app.entity.monster.Enemy");
 
 local GreenSlime = class("GreenSlime",Enemy);
 
@@ -8,10 +8,10 @@ function GreenSlime:ctor()
 
 	self.m_res_anims = "primary_enemy/green_slame";
 
-	self.m_attack = 20 -- 攻击力
-	self.m_defense = 5; -- 防御力
-	self.m_coin = 3; --金币数
-	self.m_life = 100; -- 生命
+	self.m_attack = 18 -- 攻击力
+	self.m_defense = 1; -- 防御力
+	self.m_coin = 1; --金币数
+	self.m_life = 35; -- 生命
 end
 
 return GreenSlime;

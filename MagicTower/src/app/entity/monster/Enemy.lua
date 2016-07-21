@@ -1,3 +1,4 @@
+-- 怪物基类
 local Person = require("app.entity.Person");
 
 local Enemy = class("Enemy",Person);

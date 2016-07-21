@@ -1,0 +1,17 @@
+-- 门基类
+local BaseDoor = class("BaseDoor");
+
+function BaseDoor:ctor()
+	self.m_res = "";	
+end
+
+function BaseDoor:show(x,y,anchorX,anchorY,root)
+	self.m_sprite = display.newSprite(self.m_res);
+	self.m_sprite:pos(x,y);
+	self.m_sprite:setAnchorPoint(cc.p(anchorX,anchorY));
+	self.m_sprite:addTo(root);
+
+	return self.m_sprite;
+end
+
+return BaseDoor;	
