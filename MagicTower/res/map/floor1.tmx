@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="13" height="13" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="blue_wall" tilewidth="32" tileheight="32">
   <image source="../walls/blue_wall.png" width="32" height="32"/>
  </tileset>
@@ -74,45 +74,10 @@
  </tileset>
  <layer name="bg" width="13" height="13" opacity="0.97">
   <data encoding="base64" compression="zlib">
-   eJxjYCAPiJCAyTEbmz1MSHLo5uPSwwDVR0gPsjp0NrJafPbg8jshPdgAujguM3CFNS4xQnbg8g8+M0nVQyoAAHSlBdE=
+   eJxjYCAPiJCAyTEbnz3o4vj0MBCpB5sZ2OQI2YPLrYTchg4IuY1QWOMSI2QHoTAmZA8xekgFAPAdBhk=
   </data>
  </layer>
- <layer name="defense" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBg5gGWgHTAKyAIACYQABQ==
-  </data>
- </layer>
- <layer name="attack" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBiagHWgHTAK6AYADEAABg==
-  </data>
- </layer>
- <layer name="blue_drink" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFo4C2gI1C/QAEJAAH
-  </data>
- </layer>
- <layer name="yellow_key" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBi6gHOE208rQI6/aBkWACjAACU=
-  </data>
- </layer>
- <layer name="red_drink" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBjcgH2QmzecADlhQ4/wBAAjkAAd
-  </data>
- </layer>
- <layer name="jump" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFo4AywE1j8wEGxAAM
-  </data>
- </layer>
- <layer name="up_floor" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYCAPCJOpbxSMAlIBADCoABQ=
-  </data>
- </layer>
- <objectgroup name="yellow_door">
+ <objectgroup name="yellow_door" width="0" height="0" visible="0">
   <object gid="21" x="320" y="320"/>
   <object gid="21" x="64" y="288"/>
   <object gid="21" x="64" y="192"/>
@@ -120,39 +85,34 @@
   <object gid="21" x="192" y="224"/>
   <object gid="21" x="288" y="192"/>
  </objectgroup>
- <layer name="down_floor" width="13" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFo4C6QIjK5gEACEQAEw==
-  </data>
- </layer>
- <objectgroup name="skeleton A">
+ <objectgroup name="skeleton A" width="0" height="0" visible="0">
   <object gid="15" x="61" y="321"/>
  </objectgroup>
- <objectgroup name="litter_spider">
+ <objectgroup name="litter_spider" width="0" height="0" visible="0">
   <object gid="16" x="224" y="224"/>
   <object gid="16" x="288" y="224"/>
   <object gid="16" x="320" y="352"/>
  </objectgroup>
- <objectgroup name="green_slime">
+ <objectgroup name="green_slime" width="0" height="0" visible="0">
   <object gid="13" x="96" y="64"/>
   <object gid="13" x="160" y="64"/>
   <object gid="13" x="288" y="384"/>
   <object gid="13" x="352" y="384"/>
  </objectgroup>
- <objectgroup name="red_slime">
+ <objectgroup name="red_slime" width="0" height="0" visible="0">
   <object gid="14" x="128" y="64"/>
  </objectgroup>
- <objectgroup name="master">
+ <objectgroup name="master" width="0" height="0" visible="0">
   <object gid="17" x="256" y="224"/>
  </objectgroup>
- <objectgroup name="skeleton B">
+ <objectgroup name="skeleton B" width="0" height="0" visible="0">
   <object gid="12" x="64" y="224"/>
   <object gid="12" x="64" y="160"/>
  </objectgroup>
- <objectgroup name="track">
+ <objectgroup name="track" width="0" height="0" visible="0">
   <object gid="24" x="192" y="352"/>
  </objectgroup>
- <objectgroup name="bg_wall">
+ <objectgroup name="bg_wall" width="0" height="0" visible="0">
   <object gid="3" x="0" y="32"/>
   <object gid="3" x="0" y="64"/>
   <object gid="3" x="0" y="96"/>
@@ -256,5 +216,37 @@
   <object gid="3" x="192" y="160"/>
   <object gid="3" x="192" y="128"/>
   <object gid="3" x="288" y="416"/>
+ </objectgroup>
+ <objectgroup name="down_floor" width="13" height="13" visible="0">
+  <object gid="18" x="192" y="384"/>
+ </objectgroup>
+ <objectgroup name="up_floor" width="13" height="13" visible="0">
+  <object gid="19" x="32" y="64"/>
+ </objectgroup>
+ <objectgroup name="jump" width="13" height="13" visible="0">
+  <object gid="11" x="64" y="384"/>
+ </objectgroup>
+ <objectgroup name="red_drink" width="13" height="13" visible="0">
+  <object gid="7" x="32" y="384"/>
+  <object gid="7" x="32" y="352"/>
+  <object gid="7" x="32" y="128"/>
+  <object gid="7" x="256" y="160"/>
+ </objectgroup>
+ <objectgroup name="yellow_key" width="13" height="13" visible="0">
+  <object gid="9" x="96" y="384"/>
+  <object gid="9" x="96" y="352"/>
+  <object gid="9" x="64" y="256"/>
+  <object gid="9" x="64" y="256"/>
+  <object gid="9" x="32" y="160"/>
+  <object gid="9" x="256" y="128"/>
+ </objectgroup>
+ <objectgroup name="blue_drink" width="13" height="13" visible="0">
+  <object gid="6" x="320" y="384"/>
+ </objectgroup>
+ <objectgroup name="attack" width="13" height="13" visible="0">
+  <object gid="5" x="224" y="128"/>
+ </objectgroup>
+ <objectgroup name="defense" width="13" height="13" visible="0">
+  <object gid="4" x="224" y="160"/>
  </objectgroup>
 </map>
