@@ -18,8 +18,9 @@ YellowDoor = require("app.entity.door.YellowDoor");
 BlueDoor = require("app.entity.door.BlueDoor");
 RedDoor = require("app.entity.door.RedDoor");
 
-AttackProp = require("app.entity.AttackProp");
-DefenseProp = require("app.entity.DefenseProp");
+AttackProp = require("app.entity.prop.AttackProp");
+DefenseProp = require("app.entity.prop.DefenseProp");
+JumpProp = require("app.entity.prop.JumpProp");
 
 LittleSpider = require("app.entity.monster.primary_enemy.LittleSpider");
 Priest = require("app.entity.monster.primary_enemy.Priest");
@@ -119,8 +120,11 @@ function RoomScene:createMainLayer()
 	-- 加载精灵
 	self:loadSprite();
 
-	-- 绘制特殊道具
+	-- 绘制攻击和防御
 	self:drawAttackAndDefense();
+
+	-- 绘制特殊道具
+	self:drawSpeicalProp();
 
 end
 
@@ -133,45 +137,29 @@ function RoomScene:dtor()
 end
 
 function RoomScene:onLeftResponse()
-	-- local x,y = self.m_player:getCurrentPos();
-	-- local w,h = self.m_player:getWidthHeight();
-	-- print(x,y,w,h);
-	-- print("aaa")
-	-- for k,v in pairs(self.m_walls) do 
-	-- 	print(k,v)
-	-- end
-
-	-- if self.m_walls[(x-w)*y] == 1 then 
-	-- 	return;
-	-- end
-	local x, y = self.m_player:getCurrentPos();
-
-print("colMap:" .. #self.m_colmap)
-print(x*y)
-	for k , v in pairs(self.m_colmap) do 
-		print(k,v)
+	if not self:logic("left") then 
+		return ;
 	end
-	if self.m_colmap[x * y] and self.m_colmap.m_isSolid then 
-		return;
-	end
-
-	self.m_player:onLeftClick();
 end
 
 function RoomScene:onRightResponse()
-	self.m_player:onRightClick();
-	print(self.m_player:getWidthHeight(),self.m_player:getCurrentPos())
+	if not self:logic("right") then 
+		return ;
+	end
 end
 
 function RoomScene:onUpResponse()
-	self.m_player:onUpClick();
-	print(self.m_player:getWidthHeight(),self.m_player:getCurrentPos())
+	if not self:logic("up") then 
+		return ;
+	end
+
 end
 
 function RoomScene:onDownResponse()
-	self.m_player:onDownClick();
+	if not self:logic("down") then 
+		return ;
+	end
 
-	print(self.m_player:getWidthHeight(),self.m_player:getCurrentPos())
 end
 
 ----------------------------------------------------- 加载ui ----------------------------------------------
@@ -182,7 +170,11 @@ function RoomScene:drawWall()
 		local wall = Wall.new();
 		wall:show(values.x,values.y,0,0,self.m_map);
 
-		self.m_colmap[values.x*values.y] = wall;
+		if not self.m_wallWidth or not self.m_wallHeight then 
+			self.m_wallWidth,self.m_wallHeight = wall:getWidthAndHeight();
+		end
+
+		self.m_colmap[values.x*values.y + values.x] = wall;
 	end	
 end
 
@@ -193,7 +185,7 @@ function RoomScene:drawStairs()
 		local stairs = UpStair.new();
 		stairs:show(values.x,values.y,0,0,self.m_map);
 
-		self.m_colmap[values.x*values.y] = stairs;  
+		self.m_colmap[values.x*values.y + values.x] = stairs;  
 	end	
 
 	local down_stairs = self.m_map:getObjectGroup("down_floor"):getObjects();
@@ -201,7 +193,7 @@ function RoomScene:drawStairs()
 		local stairs = DownStair.new();
 		stairs:show(values.x,values.y,0,0,self.m_map);
 
-		self.m_colmap[values.x*values.y] = stairs;
+		self.m_colmap[values.x*values.y + values.x] = stairs;
 	end
 end
 
@@ -211,14 +203,14 @@ function RoomScene:drawLiquid()
 	for _,values in pairs(red_liquid) do
 		local redDrink = RedDrink.new();
 		redDrink:show(values.x,values.y,0,0,self.m_map);
-		self.m_colmap[values.x*values.y] = redDrink;  
+		self.m_colmap[values.x*values.y + values.x] = redDrink;  
 	end
 
 	local blue_liquid = self.m_map:getObjectGroup("blue_drink"):getObjects();
 	for _,values in pairs(blue_liquid) do 
 		local blueDrink = BlueDrink.new();
 		blueDrink:show(values.x,values.y,0,0,self.m_map);
-		self.m_colmap[values.x*values.y] = blueDrink;
+		self.m_colmap[values.x*values.y+values.x] = blueDrink;
 	end	
 
 end
@@ -231,7 +223,7 @@ function RoomScene:drawKeys()
 		for _,values in pairs(yellow_key) do 
 			local yellowKey = YellowKey.new();
 			yellowKey:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = yellowKey;
+			self.m_colmap[values.x*values.y + values.x] = yellowKey;
 		end
 	end
 
@@ -241,7 +233,7 @@ function RoomScene:drawKeys()
 		for _,values in pairs(blue_key) do 
 			local blueKey = BlueKey.new();
 			blueKey:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = blueKey;
+			self.m_colmap[values.x*values.y + values.x] = blueKey;
 		end	
 	end
 
@@ -251,7 +243,7 @@ function RoomScene:drawKeys()
 		for _,values in pairs(red_key) do 
 			local redKey = RedKey.new();
 			redKey:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = redKey;
+			self.m_colmap[values.x*values.y + values.x] = redKey;
 		end	
 	end
 end
@@ -264,7 +256,7 @@ function RoomScene:drawDoors()
 		for _,values in pairs(yellow_doors) do 
 			local yellow_door = YellowDoor.new();
 			yellow_door:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = yellow_door;
+			self.m_colmap[values.x*values.y + values.x] = yellow_door;
 		end	
 	end
 
@@ -274,7 +266,7 @@ function RoomScene:drawDoors()
 		for _,values in pairs(blue_doors) do 
 			local blue_door = BlueDoor.new();
 			blue_door:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = blue_door;
+			self.m_colmap[values.x*values.y + values.x] = blue_door;
 		end	
 	end
 
@@ -284,7 +276,7 @@ function RoomScene:drawDoors()
 		for _,values in pairs(red_doors) do 
 			local red_door = RedDoor.new();
 			red_door:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = red_door;
+			self.m_colmap[values.x*values.y + values.x] = red_door;
 		end	
 	end
 end
@@ -301,20 +293,36 @@ end
 
 -- 绘制攻击和防御
 function RoomScene:drawAttackAndDefense()
-	local attacks = self.m_map:getObjectGroup("attack"):getObjects();
-
-	for _,values in pairs(attacks) do 
-		local attack = AttackProp.new();
-		attack:show(values.x,values.y,0,0,self.m_map);
-		self.m_colmap[values.x*values.y] = attack;
+	if self.m_map:getObjectGroup("attack") then 
+		local attacks = self.m_map:getObjectGroup("attack"):getObjects();
+		for _,values in pairs(attacks) do 
+			local attack = AttackProp.new();
+			attack:show(values.x,values.y,0,0,self.m_map);
+			self.m_colmap[values.x*values.y + values.x] = attack;
+		end
 	end
 
-	local defenses = self.m_map:getObjectGroup("defense"):getObjects();
+	if self.m_map:getObjectGroup("defense") then 
+		local defenses = self.m_map:getObjectGroup("defense"):getObjects();
 
-	for _,values in pairs(defenses) do 
-		local defense = DefenseProp.new();
-		defense:show(values.x,values.y,0,0,self.m_map);
-		self.m_colmap[values.x*values.y] = defense;
+		for _,values in pairs(defenses) do 
+			local defense = DefenseProp.new();
+			defense:show(values.x,values.y,0,0,self.m_map);
+			self.m_colmap[values.x*values.y + values.x] = defense;
+		end
+	end
+end
+
+-- 绘制特殊道具
+function RoomScene:drawSpeicalProp()
+	if self.m_map:getObjectGroup("jump") then 
+		local jumps = self.m_map:getObjectGroup("jump"):getObjects();
+
+		for _,values in pairs(jumps) do 
+			local jump = JumpProp.new();
+			jump:show(values.x,values.y,0,0,self.m_map);
+			self.m_colmap[values.x*values.y + values.x] = jump;
+		end
 	end
 end
 
@@ -338,7 +346,7 @@ function RoomScene:drawYellowSlime()
 		for _,values in pairs(green_slime) do 
 			local greenSlime = GreenSlime.new();
 			greenSlime:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = greenSlime;
+			self.m_colmap[values.x*values.y + values.x] = greenSlime;
 		end	
 	end
 end
@@ -350,7 +358,7 @@ function RoomScene:drawRedSlime()
 		for _,values in pairs(red_slime) do 
 			local redSlime = RedSlime.new();
 			redSlime:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = redSlime;
+			self.m_colmap[values.x*values.y + values.x] = redSlime;
 		end	
 	end
 end
@@ -362,7 +370,7 @@ function RoomScene:drawBat()
 		for _,values in pairs(little_spider) do 
 			local spider = LittleSpider.new();
 			spider:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = spider;
+			self.m_colmap[values.x*values.y + values.x] = spider;
 		end	
 	end
 end
@@ -374,7 +382,7 @@ function RoomScene:drawPriest()
 		for _,values in pairs(priest) do 
 			local priest = Priest.new();
 			priest:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = priest;
+			self.m_colmap[values.x*values.y + values.x] = priest;
 		end	
 	end
 end
@@ -386,7 +394,8 @@ function RoomScene:drawSkeletonA()
 		for _,values in pairs(skeletons) do 
 			local skeletonA = SkeletonA.new();
 			skeletonA:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = skeletonA;
+			self.m_colmap[values.x*values.y + values.x] = skeletonA;
+			print("skeletonA -- >" .. values.x,values.y)
 		end	
 	end
 end
@@ -398,11 +407,103 @@ function RoomScene:drawSkeletonB()
 		for _,values in pairs(skeletons) do 
 			local skeletonB = SkeletonB.new();
 			skeletonB:show(values.x,values.y,0,0,self.m_map);
-			self.m_colmap[values.x*values.y] = skeletonB;
+			self.m_colmap[values.x*values.y + values.x] = skeletonB;
 		end	
 	end
 end
 
+-------------------------------------logic ---------------------------------------------
+-- 主要逻辑处理
+function RoomScene:logic(direction)
+	if self.m_isLogic then 
+		print("还有逻辑在处理")
+		return;
+	end
 
+	if self.m_player.m_isAttacked then 
+		print("在攻击状态");
+		return;
+	end
+
+	self.m_isLogic = true;
+
+	local x, y = self.m_player:getCurrentPos();
+
+	if direction == "left" then 
+		x = x - self.m_wallWidth;
+
+	elseif direction == "right" then
+		x = x + self.m_wallWidth;
+
+	elseif direction == "up" then
+		y = y + self.m_wallHeight;
+
+	elseif direction == "down" then 
+		y = y - self.m_wallHeight;
+	end
+
+	-- 墙壁
+	if self.m_colmap[x * y + x] and self.m_colmap[x * y + x].m_isSolid then 
+		print("is wall");
+		self.m_player:setDirection(direction);
+		self.m_isLogic = false;
+		return false;
+	end
+
+	-- 门
+	if self.m_colmap[x * y + x] and self.m_colmap[x * y + x].m_isDoor then 
+		print("start the door");
+		
+		self.m_player:setDirection(direction);
+
+		local callBack = function()
+			self.m_colmap[x * y + x]:setVisible(false);
+			self:onDirectionClick(direction);
+		end
+		
+		self.m_colmap[x * y + x]:play(callBack);
+		return false;
+	end
+	
+	-- 道具
+	if self.m_colmap[x * y + x] and self.m_colmap[x * y + x].m_propId and tonumber(self.m_colmap[x * y + x].m_propId ) > 0 then
+		print("道具" .. self.m_colmap[x * y + x].m_name) 
+		self.m_player:setDirection(direction);
+		self.m_colmap[x * y + x]:setVisible(false);
+	end
+
+	self:onDirectionClick(direction);	
+
+print(x,y)
+-- print(self.m_colmap[x * y + x])
+-- print(self.m_colmap[x*y + x].m_enemyId)
+	if self.m_colmap[x * y + x] and self.m_colmap[x*y + x].m_enemyId and tonumber(self.m_colmap[x * y + x].m_enemyId) > 0 then 
+		print("怪物" .. self.m_colmap[x * y + x].m_name) 
+		self.m_player:setDirection(direction);
+		self.m_player:attack(self.m_map,x,y,self.m_colmap[x * y + x]);
+
+	end
+	return true;
+end
+
+function RoomScene:onDirectionClick(direction)
+	local callBack = function()
+		self.m_isLogic = false;
+	end
+
+	if direction == "left" then 
+		self.m_player:onLeftClick(callBack);
+	
+	elseif direction == "right" then 
+		self.m_player:onRightClick(callBack);
+
+	elseif direction == "up" then 
+		self.m_player:onUpClick(callBack);
+
+	elseif direction == "down" then 
+		self.m_player:onDownClick(callBack);
+	end
+
+end
 
 return RoomScene;

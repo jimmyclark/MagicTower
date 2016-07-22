@@ -12,6 +12,10 @@ function LittleSpider:ctor()
 	self.m_defense = 3; -- 防御力
 	self.m_coin = 3; --金币数
 	self.m_life = 35; -- 生命
+
+	self.m_name = "bat";
+	
+	self.m_enemyId = 3;
 end
 
 return LittleSpider;

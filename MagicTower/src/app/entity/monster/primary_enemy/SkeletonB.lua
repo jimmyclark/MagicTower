@@ -12,6 +12,9 @@ function SkeletonB:ctor()
 	self.m_defense = 6; -- 防御力
 	self.m_coin = 6; --金币数
 	self.m_life = 50; -- 生命
+
+	self.m_name = "Skeleton B";
+	self.m_enemyId = 4;
 end
 
 return SkeletonB;

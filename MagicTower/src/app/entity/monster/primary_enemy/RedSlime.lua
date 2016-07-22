@@ -12,6 +12,10 @@ function RedSlime:ctor()
 	self.m_defense = 2; -- 防御力
 	self.m_coin = 2; --金币数
 	self.m_life = 45; -- 生命
+
+	self.m_name = "red slime";
+	
+	self.m_enemyId = 2;
 end
 
 return RedSlime;

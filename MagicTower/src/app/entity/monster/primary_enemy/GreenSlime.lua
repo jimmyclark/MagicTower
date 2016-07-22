@@ -12,6 +12,10 @@ function GreenSlime:ctor()
 	self.m_defense = 1; -- 防御力
 	self.m_coin = 1; --金币数
 	self.m_life = 35; -- 生命
+
+	self.m_name = "green slime";
+
+	self.m_enemyId = 1;
 end
 
 return GreenSlime;

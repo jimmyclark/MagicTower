@@ -25,6 +25,11 @@ function Player:ctor()
 	self.m_moveTime = 0.5; -- 移动时间
 
 	self.m_direction = "up"; -- 向上
+
+	self.m_life = 1000; -- 血
+	self.m_attack = 100; -- 攻击
+	self.m_defense = 100; -- 防御
+	self.m_coin = 0; -- 金币数
 end
 
 -- 帧动画
@@ -78,7 +83,7 @@ function Player:getCurrentPos()
 	return self.m_spriteX,self.m_spriteY;
 end
 
-function Player:onLeftClick()
+function Player:onLeftClick(callBack)
 	if self.m_isPlaying then 
 		return;
 	end
@@ -106,12 +111,14 @@ function Player:onLeftClick()
 			self.m_leftId = 1;
 		end
 		self.m_isPlaying = false;
+
+		callBack();
 	end);
 	self.m_sprite:runAction(cc.Sequence:create(action,callFunc));
 
 end
 
-function Player:onRightClick()
+function Player:onRightClick(callBack)
 	if self.m_isPlaying then 
 		return;
 	end
@@ -139,11 +146,12 @@ function Player:onRightClick()
 			self.m_rightId = 1;
 		end
 		self.m_isPlaying = false;
+		callBack();
 	end);
 	self.m_sprite:runAction(cc.Sequence:create(action,callFunc));
 end
 
-function Player:onUpClick()
+function Player:onUpClick(callBack)
 	if self.m_isPlaying then
 		return;
 	end
@@ -170,11 +178,12 @@ function Player:onUpClick()
 			self.m_upId = 1;
 		end
 		self.m_isPlaying = false;
+		callBack();
 	end);
 	self.m_sprite:runAction(cc.Sequence:create(action,callFunc));
 end
 
-function Player:onDownClick()
+function Player:onDownClick(callBack)
 	if self.m_isPlaying then 
 		return;
 	end
@@ -201,12 +210,89 @@ function Player:onDownClick()
 			self.m_downId = 1;
 		end
 		self.m_isPlaying = false;
+		callBack();
 	end);
 	self.m_sprite:runAction(cc.Sequence:create(action,callFunc));
 end
 
 function Player:clearAllDirections()
-	
+
+end
+
+function Player:setDirection(direction)
+	self.m_sprite:setTexture("actors/actor_" .. direction .. "1.png" );
+end
+
+function Player:attack(root,x,y,enemy)
+	if tonumber(self.m_attack < enemy.m_defense) then 
+		-- 不能打
+		print("打不过，毋庸置疑")
+		return false;
+	end
+
+	self.m_isAttacked = true;
+
+	self.m_isFirstOrNot = true;
+
+	local attackCallBack = function()
+		-- 第一个打的是人
+		if self.m_isFirstOrNot then 
+			local attackLife = self.m_attack - enemy.m_defense;
+			
+			if attackLife <= 0 then 
+				attackLife = 0;
+			end
+
+			enemy.m_life = enemy.m_life - attackLife;
+
+			if enemy.m_life < 0 then 
+				enemy.m_life = 0;
+			end
+
+			local explosion = cc.ParticleFireworks:create();
+			explosion:pos(x+16,y)
+			-- explosion:setAnchorPoint(cc.p(0,0))
+			explosion:setAutoRemoveOnFinish(true);
+			explosion:setTotalParticles(30);
+			-- explosion:setLife(1.0);
+			explosion:setDuration(1);
+
+			explosion:addTo(root);
+		else
+			
+			local needLife = enemy.m_attack - self.m_defense;
+			if needLife <= 0 then 
+				needLife = 0;
+			end
+			self.m_life = self.m_life - needLife;
+
+		end
+
+		if self.m_life <= 0 then 
+			self.m_life = 0;
+			print("you died")
+			self.m_sprite:stopAllActions();
+			self.m_isAttacked = false;
+		end
+
+		if enemy.m_life <= 0 then 
+			enemy.m_life = 0;
+			print("enemy died");
+			self.m_sprite:stopAllActions();
+			enemy:died();
+			self.m_isAttacked = false;
+		end
+
+		print("m_life:" .. self.m_life)
+		print("other_life" .. enemy.m_life);
+		self.m_isFirstOrNot = not self.m_isFirstOrNot;
+	end
+
+	local callFunc = cc.CallFunc:create(function()
+		attackCallBack();
+	end);
+
+	self.m_sprite:runAction(cc.RepeatForever:create(cc.Sequence:create(cc.DelayTime:create(1),callFunc)));
 
 end
 

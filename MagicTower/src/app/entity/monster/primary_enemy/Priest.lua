@@ -12,6 +12,10 @@ function Priest:ctor()
 	self.m_defense = 8; -- 防御力
 	self.m_coin = 5; --金币数
 	self.m_life = 60; -- 生命
+
+	self.m_name = priest;
+
+	self.m_enemyId = 5;
 end
 
 return Priest;

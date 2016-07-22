@@ -6,6 +6,13 @@ local Enemy = class("Enemy",Person);
 function Enemy:ctor()
 	Enemy.super:ctor();
 	self.m_res_anims = "";
+	self.m_name = "";
+	self.m_enemyId = 0; -- 怪物编号
+
+	self.m_attack = 0 -- 攻击力
+	self.m_defense = 0; -- 防御力
+	self.m_coin = 0; --金币数
+	self.m_life = 0; -- 生命
 end
 
 -- 帧动画
@@ -31,6 +38,12 @@ function Enemy:show(x,y,anchorX,anchorY,root)
 	end
 end
 
-
+-- 敌人死了
+function Enemy:died()
+	self.m_sprite:stopAllActions();	
+	self.m_sprite:setVisible(false);
+	self.m_enemyId = 0;
+	self.m_name = "";
+end
 
 return Enemy;	

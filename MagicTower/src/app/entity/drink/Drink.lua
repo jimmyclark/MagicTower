@@ -1,26 +1,17 @@
 -- 药水
-local Drink = class("Drink");
+local BaseProp = require("app.entity.prop.BaseProp");
+
+local Drink = class("Drink",BaseProp);
 
 function Drink:ctor()
-	self.m_value = 0; -- 药水恢复的值
-	self.m_res = "";	
-end
+	Drink.super:ctor();
+	self.m_propId = 0 ; -- 物品id
+	self.m_res = ""; -- 物品资源路径
+	self.m_extraValue = nil; -- 额外属性
 
-function Drink:show(x,y,anchorX,anchorY,root)
-	self.m_sprite = display.newSprite(self.m_res);
-	self.m_sprite:pos(x,y);
-	self.m_sprite:setAnchorPoint(cc.p(anchorX,anchorY));
-	self.m_sprite:addTo(root);
+	self.m_sprite = nil; -- 精灵
 
-	return self.m_sprite;
-end
-
-function Drink:getValue()
-	return self.m_value;
-end
-
-function Drink:setValue(value)
-	self.m_value = value;
+	self.m_name = "";
 end
 
 return Drink;	

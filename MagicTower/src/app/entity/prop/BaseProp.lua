@@ -28,4 +28,10 @@ function BaseProp:setValue(value)
 	self.m_extraValue = value;
 end
 
+function BaseProp:setVisible(isVisible) 
+	self.m_sprite:setVisible(isVisible);
+	self.m_propId = nil;
+	self.m_name = "";
+end
+
 return BaseProp;

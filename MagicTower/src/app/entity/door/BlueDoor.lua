@@ -5,7 +5,9 @@ local BlueDoor = class("BlueDoor",Door);
 
 function BlueDoor:ctor()
 	BlueDoor.super:ctor();
-	self.m_res = "door/blue_door1.png";
+	self.m_res = "blue_door";
+
+	self.m_name = "blue door";
 end
 
 return BlueDoor;
