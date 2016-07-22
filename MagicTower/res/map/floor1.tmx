@@ -77,7 +77,7 @@
    eJxjYCAPiJCAyTEbnz3o4vj0MBCpB5sZ2OQI2YPLrYTchg4IuY1QWOMSI2QHoTAmZA8xekgFAPAdBhk=
   </data>
  </layer>
- <objectgroup name="yellow_door" width="0" height="0" visible="0">
+ <objectgroup name="yellow_door" width="0" height="0">
   <object gid="21" x="320" y="320"/>
   <object gid="21" x="64" y="288"/>
   <object gid="21" x="64" y="192"/>
@@ -85,34 +85,31 @@
   <object gid="21" x="192" y="224"/>
   <object gid="21" x="288" y="192"/>
  </objectgroup>
- <objectgroup name="skeleton A" width="0" height="0" visible="0">
-  <object gid="15" x="61" y="321"/>
- </objectgroup>
- <objectgroup name="litter_spider" width="0" height="0" visible="0">
+ <objectgroup name="litter_spider" width="0" height="0">
   <object gid="16" x="224" y="224"/>
   <object gid="16" x="288" y="224"/>
   <object gid="16" x="320" y="352"/>
  </objectgroup>
- <objectgroup name="green_slime" width="0" height="0" visible="0">
+ <objectgroup name="green_slime" width="0" height="0">
   <object gid="13" x="96" y="64"/>
   <object gid="13" x="160" y="64"/>
   <object gid="13" x="288" y="384"/>
   <object gid="13" x="352" y="384"/>
  </objectgroup>
- <objectgroup name="red_slime" width="0" height="0" visible="0">
+ <objectgroup name="red_slime" width="0" height="0">
   <object gid="14" x="128" y="64"/>
  </objectgroup>
- <objectgroup name="master" width="0" height="0" visible="0">
+ <objectgroup name="master" width="0" height="0">
   <object gid="17" x="256" y="224"/>
  </objectgroup>
- <objectgroup name="skeleton B" width="0" height="0" visible="0">
+ <objectgroup name="skeleton B" width="0" height="0">
   <object gid="12" x="64" y="224"/>
   <object gid="12" x="64" y="160"/>
  </objectgroup>
- <objectgroup name="track" width="0" height="0" visible="0">
+ <objectgroup name="track" width="0" height="0">
   <object gid="24" x="192" y="352"/>
  </objectgroup>
- <objectgroup name="bg_wall" width="0" height="0" visible="0">
+ <objectgroup name="bg_wall" width="0" height="0">
   <object gid="3" x="0" y="32"/>
   <object gid="3" x="0" y="64"/>
   <object gid="3" x="0" y="96"/>
@@ -217,36 +214,37 @@
   <object gid="3" x="192" y="128"/>
   <object gid="3" x="288" y="416"/>
  </objectgroup>
- <objectgroup name="down_floor" width="13" height="13" visible="0">
+ <objectgroup name="down_floor" width="13" height="13">
   <object gid="18" x="192" y="384"/>
  </objectgroup>
- <objectgroup name="up_floor" width="13" height="13" visible="0">
+ <objectgroup name="up_floor" width="13" height="13">
   <object gid="19" x="32" y="64"/>
  </objectgroup>
- <objectgroup name="jump" width="13" height="13" visible="0">
+ <objectgroup name="jump" width="13" height="13">
   <object gid="11" x="64" y="384"/>
  </objectgroup>
- <objectgroup name="red_drink" width="13" height="13" visible="0">
+ <objectgroup name="red_drink" width="13" height="13">
   <object gid="7" x="32" y="384"/>
   <object gid="7" x="32" y="352"/>
   <object gid="7" x="32" y="128"/>
   <object gid="7" x="256" y="160"/>
  </objectgroup>
- <objectgroup name="yellow_key" width="13" height="13" visible="0">
+ <objectgroup name="blue_drink" width="13" height="13">
+  <object gid="6" x="320" y="384"/>
+ </objectgroup>
+ <objectgroup name="attack" width="13" height="13">
+  <object gid="5" x="224" y="128"/>
+ </objectgroup>
+ <objectgroup name="defense" width="13" height="13">
+  <object gid="4" x="224" y="160"/>
+ </objectgroup>
+ <objectgroup name="yellow_key" width="13" height="13">
   <object gid="9" x="96" y="384"/>
   <object gid="9" x="96" y="352"/>
   <object gid="9" x="64" y="256"/>
-  <object gid="9" x="64" y="256"/>
-  <object gid="9" x="32" y="160"/>
   <object gid="9" x="256" y="128"/>
  </objectgroup>
- <objectgroup name="blue_drink" width="13" height="13" visible="0">
-  <object gid="6" x="320" y="384"/>
- </objectgroup>
- <objectgroup name="attack" width="13" height="13" visible="0">
-  <object gid="5" x="224" y="128"/>
- </objectgroup>
- <objectgroup name="defense" width="13" height="13" visible="0">
-  <object gid="4" x="224" y="160"/>
+ <objectgroup name="skeleton A" width="13" height="13">
+  <object gid="15" x="64" y="320"/>
  </objectgroup>
 </map>
