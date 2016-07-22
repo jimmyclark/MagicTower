@@ -468,18 +468,46 @@ function RoomScene:logic(direction)
 	-- 道具
 	if self.m_colmap[x * y + x] and self.m_colmap[x * y + x].m_propId and tonumber(self.m_colmap[x * y + x].m_propId ) > 0 then
 		print("道具" .. self.m_colmap[x * y + x].m_name) 
+		-- 黄钥匙
+		if self.m_colmap[x * y + x].m_propId == 1 then 
+			self.m_player:setYelloKeys(self.m_colmap[x * y + x]:getValue());
+
+		-- 蓝钥匙
+		elseif self.m_colmap[x * y + x].m_propId == 2 then  
+			self.m_player:setBlueKeys(self.m_colmap[x * y + x]:getValue());
+
+		-- 红钥匙
+		elseif self.m_colmap[x * y + x].m_propId == 3 then
+			self.m_player:setRedKeys(self.m_colmap[x * y + x]:getValue());
+
+		-- 红药水,蓝药水
+		elseif self.m_colmap[x * y + x].m_propId == 21 or self.m_colmap[x * y + x].m_propId == 22 then 
+			self.m_player:setLife(self.m_colmap[x * y + x]:getValue());
+
+		-- 攻击
+		elseif self.m_colmap[x * y + x].m_propId == 11 then 
+			self.m_player:setAttack(self.m_colmap[x * y + x]:getValue());
+
+		-- 防御
+		elseif self.m_colmap[x * y + x].m_propId == 12 then 
+			self.m_player:setDefense(self.m_colmap[x * y + x]:getValue());
+
+		-- 特殊道具
+		elseif self.m_colmap[x * y + x].m_propId > 100 then 
+			self.m_player:setProp(self.m_colmap[x*y + x])
+		end
+
 		self.m_player:setDirection(direction);
 		self.m_colmap[x * y + x]:setVisible(false);
+
+		self.m_player:toString();
 	end
 
 	self:onDirectionClick(direction);	
 
-print(x,y)
--- print(self.m_colmap[x * y + x])
--- print(self.m_colmap[x*y + x].m_enemyId)
 	if self.m_colmap[x * y + x] and self.m_colmap[x*y + x].m_enemyId and tonumber(self.m_colmap[x * y + x].m_enemyId) > 0 then 
 		print("怪物" .. self.m_colmap[x * y + x].m_name) 
-		self.m_player:setDirection(direction);
+		-- self.m_player:setDirection(direction);
 		self.m_player:attack(self.m_map,x,y,self.m_colmap[x * y + x]);
 
 	end

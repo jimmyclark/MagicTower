@@ -30,6 +30,12 @@ function Player:ctor()
 	self.m_attack = 100; -- 攻击
 	self.m_defense = 100; -- 防御
 	self.m_coin = 0; -- 金币数
+
+	self.m_yellowKeys = 0; -- 黄钥匙数
+	self.m_blueKeys = 0; -- 蓝钥匙数
+	self.m_redKeys = 0; -- 红钥匙数
+
+	self.m_specialProps = {}; -- 特殊物品
 end
 
 -- 帧动画
@@ -116,6 +122,15 @@ function Player:onLeftClick(callBack)
 	end);
 	self.m_sprite:runAction(cc.Sequence:create(action,callFunc));
 
+end
+
+function Player:toString()
+	print("player-> life:" .. self.m_life .. "\t attack:" .. self.m_attack .. "\t defense:" .. self.m_defense 
+		.. "\t yellowKeys:" .. self.m_yellowKeys .. "\t blueKeys:" .. self.m_blueKeys .. "\t redKeys:" .. self.m_redKeys .. "\n道具:"
+		);
+	for i = 1,#self.m_specialProps do 
+		print(self.m_specialProps[i].m_name)
+	end
 end
 
 function Player:onRightClick(callBack)
@@ -219,6 +234,79 @@ function Player:clearAllDirections()
 
 end
 
+function Player:setLife(life)
+	self.m_life = self.m_life + life;
+end
+
+function Player:getLife()
+	return self.m_life;
+end
+
+function Player:setAttack(attack)
+	self.m_attack = self.m_attack + attack;
+end
+
+function Player:getAttack()
+	return self.m_attack;
+end
+
+function Player:setDefense(defense)
+	self.m_defense = self.m_defense + defense;
+end
+
+function Player:getDefense()
+	return self.m_defense;
+end
+
+function Player:setCoin(coin)
+	self.m_coin = coin;
+end
+
+function Player:getCoin()
+	return self.m_coin;
+end
+
+function Player:setYelloKeys(yellowKey)
+	self.m_yellowKeys = self.m_yellowKeys + yellowKey;
+end
+
+function Player:getYelloKeys()
+	return self.m_yellowKeys;
+end
+
+function Player:setBlueKeys(blueKey)
+	self.m_blueKeys = self.m_blueKeys + blueKey;
+end
+
+function Player:getBlueKeys()
+	return self.m_blueKeys;
+end
+
+function Player:setRedKeys(redKey)
+	self.m_redKeys = self.m_redKeys + redKey;
+end
+
+function Player:getRedKeys()
+	return self.m_redKeys;
+end
+
+function Player:setProp(prop)
+	self.m_specialProps[#self.m_specialProps + 1] = publ_deepcopy(prop); 
+end
+
+function Player:removeProp(prop)
+	for i = 1,#self.m_specialProps do 
+		if self.m_specialProps[i].m_propId == prop.m_propId then 
+			table.remove(self.m_specialProps[i]);
+			return;
+		end
+	end
+end
+
+function Player:getProp()
+	return self.m_specialProps;
+end
+
 function Player:setDirection(direction)
 	self.m_sprite:setTexture("actors/actor_" .. direction .. "1.png" );
 end
@@ -294,6 +382,25 @@ function Player:attack(root,x,y,enemy)
 
 	self.m_sprite:runAction(cc.RepeatForever:create(cc.Sequence:create(cc.DelayTime:create(1),callFunc)));
 
+end
+
+--深度拷贝一个table
+function publ_deepcopy(object)
+	local lookup_table = {}
+	local function _copy(object)
+		if type(object) ~= "table" then
+			return object
+		elseif lookup_table[object] then
+			return lookup_table[object]
+		end
+		local new_table = {}
+		lookup_table[object] = new_table
+		for index, value in pairs(object) do
+			new_table[_copy(index)] = _copy(value)
+		end
+		return setmetatable(new_table, getmetatable(object))
+	end
+	return _copy(object)
 end
 
 return Player;	
