@@ -6,7 +6,7 @@ local RedDoor = class("RedDoor",Door);
 function RedDoor:ctor()
 	RedDoor.super:ctor();
 	self.m_res = "red_door";
-
+	self.m_doorId = 3; -- 门类型
 	self.m_name = "red door";
 end
 

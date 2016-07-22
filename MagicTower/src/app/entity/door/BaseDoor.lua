@@ -4,6 +4,7 @@ local BaseDoor = class("BaseDoor");
 function BaseDoor:ctor()
 	self.m_res = "";
 	self.m_isDoor = true;
+	self.m_doorId = 0; -- 门类型
 	self.m_name = "";	
 end
 

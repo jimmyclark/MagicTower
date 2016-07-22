@@ -6,7 +6,7 @@ local UpStair = class("UpStair",Stair);
 function UpStair:ctor()
 	UpStair.super:ctor();
 	self.m_res = "floor/up_floor.png";
-
+	self.m_direction = "up";
 	self.m_name = "up_floor";
 end
 

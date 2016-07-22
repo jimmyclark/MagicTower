@@ -3,6 +3,8 @@ local Stair = class("Stair");
 
 function Stair:ctor()
 	self.m_res = "";	
+	self.m_isStair = true;
+	self.m_direction = "";
 end
 
 function Stair:show(x,y,anchorX,anchorY,root)

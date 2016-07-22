@@ -450,10 +450,55 @@ function RoomScene:logic(direction)
 		return false;
 	end
 
+	-- 楼梯
+	if self.m_colmap[x * y + x] and self.m_colmap[x * y + x].m_isStair then 
+		if self.m_colmap[x * y + x].m_direction == "up" then 
+			print("向上一层")
+
+		elseif self.m_colmap[x * y + x].m_direction == "down" then 
+			print("向下一层");
+		end
+	end
+
 	-- 门
 	if self.m_colmap[x * y + x] and self.m_colmap[x * y + x].m_isDoor then 
 		print("start the door");
-		
+
+		-- 黄门
+		if self.m_colmap[x * y + x].m_doorId == 1 then 
+			if self.m_player:getYelloKeys() <= 0 then 
+				print("no yellow door");
+				self.m_player:setDirection(direction)
+				self.m_isLogic = false;
+				return false;
+			end
+
+			self.m_player:consumeYelloKey();
+
+		-- 蓝门
+		elseif self.m_colmap[x * y + x].m_doorId == 2 then 
+			if self.m_player:getBlueKeys() <= 0 then 
+				print("no blue door");
+				self.m_player:setDirection(direction)
+				self.m_isLogic = false;
+				return false;
+			end
+
+			self.m_player:consumeBlueKey();
+
+		-- 红门
+		elseif self.m_colmap[x * y + x].m_doorId == 3 then 
+			if self.m_player:getRedKeys() <= 0 then 
+				print("no red door");
+				self.m_player:setDirection(direction)
+				self.m_isLogic = false;
+				return false;
+			end
+
+			self.m_player:consumeRedKey();
+
+		end
+
 		self.m_player:setDirection(direction);
 
 		local callBack = function()

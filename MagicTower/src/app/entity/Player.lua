@@ -274,6 +274,12 @@ function Player:getYelloKeys()
 	return self.m_yellowKeys;
 end
 
+function Player:consumeYelloKey()
+	if self.m_yellowKeys > 0 then 
+		self.m_yellowKeys = self.m_yellowKeys - 1;
+	end
+end
+
 function Player:setBlueKeys(blueKey)
 	self.m_blueKeys = self.m_blueKeys + blueKey;
 end
@@ -282,12 +288,24 @@ function Player:getBlueKeys()
 	return self.m_blueKeys;
 end
 
+function Player:consumeBlueKey()
+	if self.m_blueKeys > 0 then 
+		self.m_blueKeys = self.m_blueKeys - 1;
+	end
+end
+
 function Player:setRedKeys(redKey)
 	self.m_redKeys = self.m_redKeys + redKey;
 end
 
 function Player:getRedKeys()
 	return self.m_redKeys;
+end
+
+function Player:consumeRedKey()
+	if self.m_redKeys > 0 then 
+		self.m_redKeys = self.m_redKeys - 1;
+	end
 end
 
 function Player:setProp(prop)
