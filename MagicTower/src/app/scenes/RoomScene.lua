@@ -36,9 +36,15 @@ function RoomScene:ctor()
 
 	self.m_currentFloor = 1; -- 当前楼层
 
-	self:createLeftLayer();
+	cc(self):addComponent("components.behavior.EventProtocol"):exportMethods();
+
+	self:createBgLayer();
 
 	self:createMainLayer();
+
+	self:createLeftContent();
+
+
 end
 
 kGameWall 	   = 0;  -- 普通墙壁
@@ -50,7 +56,7 @@ kGameDrink 	   = 4;  -- 药水
 kGamePropAttack= 5;  -- 攻击
 kGamePropDefen = 6;  -- 防御
 
-function RoomScene:createLeftLayer()
+function RoomScene:createBgLayer()
 	local layer = display.newColorLayer(cc.c4b(0x8B,0x8B,0xBB, 255));
 	layer:addTo(self);
 
@@ -89,7 +95,6 @@ function RoomScene:createLeftLayer()
 	self:addNodeEventListener(cc.KEYPAD_EVENT,function(event)
 		print("event.key" .. event.key)
 	end);
-
 end
 
 function RoomScene:createMainLayer()
@@ -126,6 +131,142 @@ function RoomScene:createMainLayer()
 	-- 绘制特殊道具
 	self:drawSpeicalProp();
 
+end
+
+function RoomScene:createLeftContent()
+	self.m_leftBg = cc.LayerColor:create(cc.c4b(255, 255, 255, 128));
+	local width = self.m_map:getContentSize().width;
+	local height = self.m_map:getContentSize().height;
+	self.m_leftBg:setContentSize(width/2,height);
+	self.m_leftBg:setPosition(display.cx - width , display.cy/3 + 7*display.contentScaleFactor);
+	self.m_leftX = display.cx - width;
+	self.m_leftY = display.cy/3 + 7*display.contentScaleFactor + height;
+	self.m_leftBg:setAnchorPoint(cc.p(0.5,0.5))
+	self.m_leftBg:addTo(self);
+
+	self:createPerson();
+end
+
+function RoomScene:createPerson()
+	self.m_photo = display.newSprite("user.jpg");
+	local w = self.m_photo:getContentSize().width;
+	local h = self.m_photo:getContentSize().height;
+	local y = self.m_leftY - h /2 - 5*display.contentScaleFactor;
+	self.m_photo:setPosition(self.m_leftX + w, y);
+	self.m_photo:addTo(self);
+
+	y = y - h * 5/6;
+
+	-- Floor
+	self.m_floorTitle = UICreator.createFontText(
+		"Floor",20,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,self.m_leftX + w/3 + 40 * display.contentScaleFactor ,y ,255,255,0,"fonts/UIFont.fnt");
+	self.m_floorTitle:addTo(self);
+
+	w = self.m_floorTitle:getContentSize().width;
+
+	-- Floor 1
+	self.m_floorText = UICreator.createText(
+		self.m_currentFloor .. "",35,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,self.m_leftX + w + 60 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
+	self.m_floorText:addTo(self);
+
+	h = self.m_floorTitle:getContentSize().height;
+
+	y = y - h * 3/4;
+
+	-- Life
+	self.m_lifeIcon = display.newSprite("player/life.png");
+	local x = self.m_leftX + w/2;
+	self.m_lifeIcon:setPosition(x,y + 8 * display.contentScaleFactor);
+	self.m_lifeIcon:addTo(self);
+
+	local lifeText = self.m_player:getLife();
+	self.m_lifeText = UICreator.createText(
+		lifeText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
+	self.m_lifeText:addTo(self);
+
+	h = self.m_lifeText:getContentSize().height;
+
+	y = y - h * 1.2 ;
+
+	-- Attack
+	self.m_attackIcon = display.newSprite("player/attack.png");
+	self.m_attackIcon:setPosition(x,y + 8 * display.contentScaleFactor);
+	self.m_attackIcon:addTo(self);
+
+	local attackText = self.m_player:getAttack();
+	self.m_attackText = UICreator.createText(
+			attackText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
+	self.m_attackText:addTo(self);
+
+	y = y - h * 1.2 ;
+
+	-- Defense
+	self.m_defenseIcon = display.newSprite("player/defense.png");
+	self.m_defenseIcon:setPosition(x,y + 8 * display.contentScaleFactor);
+	self.m_defenseIcon:addTo(self);	
+
+	local defenseText = self.m_player:getDefense();
+	self.m_defenseText = UICreator.createText(
+		defenseText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
+	self.m_defenseText:addTo(self);
+
+	y = y - h * 1.2 ;
+
+	-- 金币
+	self.m_coinIcon = display.newSprite("prop/prop_coin.png");
+	self.m_coinIcon:setPosition(x,y + 8 * display.contentScaleFactor);
+	self.m_coinIcon:addTo(self);	
+
+	local coinText = self.m_player:getCoin();
+	self.m_coinText = UICreator.createText(
+		coinText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
+	self.m_coinText:addTo(self);	
+
+	y = y - h * 1.5 ;
+
+	x = self.m_leftX + w/5;
+
+	-- 黄钥匙
+	self.m_yellowKey = display.newSprite("keys/yellow_key.png");
+	self.m_yellowKey:setPosition(x , y + 8 * display.contentScaleFactor);
+	self.m_yellowKey:addTo(self);
+
+	local yellowText = self.m_player:getYelloKeys();
+	self.m_yellowText = UICreator.createText(
+		yellowText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 30 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
+	self.m_yellowText:addTo(self);	
+
+	x = self.m_leftX + w * 0.8;
+
+	-- 蓝钥匙
+	self.m_blueKey = display.newSprite("keys/blue_key.png");
+	self.m_blueKey:setPosition(x , y + 8 * display.contentScaleFactor);
+	self.m_blueKey:addTo(self);
+
+	local blueText = self.m_player:getBlueKeys();
+	self.m_blueText = UICreator.createText(
+		blueText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 30 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
+	self.m_blueText:addTo(self);
+
+	x = self.m_leftX + w * 1.4;
+
+	-- 红钥匙
+	self.m_redKey = display.newSprite("keys/red_key.png");
+	self.m_redKey:setPosition(x , y + 8 * display.contentScaleFactor);
+	self.m_redKey:addTo(self);
+
+	local redText = self.m_player:getRedKeys();
+	self.m_redText = UICreator.createText(
+		redText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 30 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
+	self.m_redText:addTo(self);		
+
+	y = y - h * 1.5 ;
+
+	-- Message
+	x = self.m_leftX + w;
+	self.m_messageText = UICreator.createText(
+		"",15,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x ,y + 4 * display.contentScaleFactor,255,255,255);
+	self.m_messageText:addTo(self);
 end
 
 function RoomScene:onEnter()
@@ -286,7 +427,7 @@ function RoomScene:loadSprite()
 	local players = self.m_map:getObjectGroup("track"):getObjects();
 
 	for _,v in pairs(players) do 
-		self.m_player = Player.new();
+		self.m_player = Player.new(self);
 		self.m_playerSprite = self.m_player:show(v.x,v.y,0,0,self.m_map,"up");
 	end
 end
@@ -395,7 +536,6 @@ function RoomScene:drawSkeletonA()
 			local skeletonA = SkeletonA.new();
 			skeletonA:show(values.x,values.y,0,0,self.m_map);
 			self.m_colmap[values.x*values.y + values.x] = skeletonA;
-			print("skeletonA -- >" .. values.x,values.y)
 		end	
 	end
 end
@@ -466,6 +606,7 @@ function RoomScene:logic(direction)
 
 		-- 黄门
 		if self.m_colmap[x * y + x].m_doorId == 1 then 
+
 			if self.m_player:getYelloKeys() <= 0 then 
 				print("no yellow door");
 				self.m_player:setDirection(direction)
@@ -473,10 +614,11 @@ function RoomScene:logic(direction)
 				return false;
 			end
 
-			self.m_player:consumeYelloKey();
+			self:dispatchEvent({name = Player.ACTION_CONSUME_KEY, style = kYellowKey,value = 1});
 
 		-- 蓝门
 		elseif self.m_colmap[x * y + x].m_doorId == 2 then 
+
 			if self.m_player:getBlueKeys() <= 0 then 
 				print("no blue door");
 				self.m_player:setDirection(direction)
@@ -484,7 +626,7 @@ function RoomScene:logic(direction)
 				return false;
 			end
 
-			self.m_player:consumeBlueKey();
+			self:dispatchEvent({name = Player.ACTION_CONSUME_KEY, style = kBlueKey,value = 1});
 
 		-- 红门
 		elseif self.m_colmap[x * y + x].m_doorId == 3 then 
@@ -495,7 +637,7 @@ function RoomScene:logic(direction)
 				return false;
 			end
 
-			self.m_player:consumeRedKey();
+			self:dispatchEvent({name = Player.ACTION_CONSUME_KEY, style = kRedKey,value = 1});
 
 		end
 
@@ -515,27 +657,27 @@ function RoomScene:logic(direction)
 		print("道具" .. self.m_colmap[x * y + x].m_name) 
 		-- 黄钥匙
 		if self.m_colmap[x * y + x].m_propId == 1 then 
-			self.m_player:setYelloKeys(self.m_colmap[x * y + x]:getValue());
+			self:dispatchEvent({name = Player.ACTION_ADD_KEY, style = kYellowKey,value = 1});
 
 		-- 蓝钥匙
 		elseif self.m_colmap[x * y + x].m_propId == 2 then  
-			self.m_player:setBlueKeys(self.m_colmap[x * y + x]:getValue());
+			self:dispatchEvent({name = Player.ACTION_ADD_KEY, style = kBlueKey,value = 1});
 
 		-- 红钥匙
 		elseif self.m_colmap[x * y + x].m_propId == 3 then
-			self.m_player:setRedKeys(self.m_colmap[x * y + x]:getValue());
+			self:dispatchEvent({name = Player.ACTION_ADD_KEY, style = kRedKey,value = 1});
 
 		-- 红药水,蓝药水
 		elseif self.m_colmap[x * y + x].m_propId == 21 or self.m_colmap[x * y + x].m_propId == 22 then 
-			self.m_player:setLife(self.m_colmap[x * y + x]:getValue());
+			self:dispatchEvent({name = Player.ACTION_ADD_LIFE,value = self.m_colmap[x * y + x]:getValue()});
 
 		-- 攻击
 		elseif self.m_colmap[x * y + x].m_propId == 11 then 
-			self.m_player:setAttack(self.m_colmap[x * y + x]:getValue());
+			self:dispatchEvent({name = Player.ACTION_ADD_ATTACK,value = self.m_colmap[x * y + x]:getValue()});
 
 		-- 防御
 		elseif self.m_colmap[x * y + x].m_propId == 12 then 
-			self.m_player:setDefense(self.m_colmap[x * y + x]:getValue());
+			self:dispatchEvent({name = Player.ACTION_ADD_DEFENSE,value = self.m_colmap[x * y + x]:getValue()});
 
 		-- 特殊道具
 		elseif self.m_colmap[x * y + x].m_propId > 100 then 
@@ -551,11 +693,9 @@ function RoomScene:logic(direction)
 	self:onDirectionClick(direction);	
 
 	if self.m_colmap[x * y + x] and self.m_colmap[x*y + x].m_enemyId and tonumber(self.m_colmap[x * y + x].m_enemyId) > 0 then 
-		print("怪物" .. self.m_colmap[x * y + x].m_name) 
-		-- self.m_player:setDirection(direction);
-		self.m_player:attack(self.m_map,x,y,self.m_colmap[x * y + x]);
-
+		self:attack(self.m_player,self.m_colmap[x * y + x],x,y);
 	end
+
 	return true;
 end
 
@@ -577,6 +717,119 @@ function RoomScene:onDirectionClick(direction)
 		self.m_player:onDownClick(callBack);
 	end
 
+end
+
+function RoomScene:attack(player,enemy,x,y)
+	if tonumber(player.m_attack < enemy.m_defense) then 
+		-- 不能打
+		print("打不过，毋庸置疑")
+		return false;
+	end
+
+	player.m_isAttacked = true;
+
+	self.m_isFirstOrNot = true;
+
+	local attackCallBack = function()
+		-- 第一个打的是人
+		if self.m_isFirstOrNot then 
+			local attackLife = player.m_attack - enemy.m_defense;
+			
+			if attackLife <= 0 then 
+				attackLife = 0;
+			end
+
+			enemy.m_life = enemy.m_life - attackLife;
+
+			if enemy.m_life < 0 then 
+				enemy.m_life = 0;
+			end
+
+			local explosion = cc.ParticleFireworks:create();
+			explosion:pos(x+16,y)
+			-- explosion:setAnchorPoint(cc.p(0,0))
+			explosion:setAutoRemoveOnFinish(true);
+			explosion:setTotalParticles(30);
+			-- explosion:setLife(1.0);
+			explosion:setDuration(1);
+
+			explosion:addTo(self.m_map);
+
+		else
+			
+			local needLife = enemy.m_attack - player.m_defense;
+			if needLife <= 0 then 
+				needLife = 0;
+			end
+
+			self:dispatchEvent({name = Player.ACTION_MINUS_LIFE,value = needLife});
+		end
+
+		if player.m_life <= 0 then 
+			player.m_life = 0;
+			print("you died")
+			player.m_sprite:stopAllActions();
+			player.m_isAttacked = false;
+		end
+
+		if enemy.m_life <= 0 then 
+			enemy.m_life = 0;
+			print("enemy died");
+			player.m_sprite:stopAllActions();
+			enemy:died();
+			player.m_isAttacked = false;
+
+			self:dispatchEvent({name = Player.ACTION_ADD_COIN,value = enemy.m_coin});
+
+		end
+
+		print("m_life:" .. player.m_life)
+		print("other_life" .. enemy.m_life);
+		self.m_isFirstOrNot = not self.m_isFirstOrNot;
+	end
+
+	local callFunc = cc.CallFunc:create(function()
+		attackCallBack();
+	end);
+
+	player.m_sprite:runAction(cc.RepeatForever:create(cc.Sequence:create(cc.DelayTime:create(1),callFunc)));
+
+end
+
+
+function RoomScene:updateYellowKey()
+	local yellowKeys = self.m_player:getYelloKeys();
+	self.m_yellowText:setString(yellowKeys);
+end
+
+function RoomScene:updateBlueKey()
+	local blueKeys = self.m_player:getBlueKeys();
+	self.m_blueText:setString(blueKeys);
+end
+
+function RoomScene:updateRedKey()
+	local redKeys = self.m_player:getRedKeys();
+	self.m_redText:setString(redKeys);
+end
+
+function RoomScene:updateLife()
+	local life = self.m_player:getLife();
+	self.m_lifeText:setString(life);
+end
+
+function RoomScene:updateAttack()
+	local attack = self.m_player:getAttack();
+	self.m_attackText:setString(attack);
+end
+
+function RoomScene:updateDefense()
+	local defense = self.m_player:getDefense();
+	self.m_defenseText:setString(defense);
+end
+
+function RoomScene:updateCoin()
+	local coin = self.m_player:getCoin();
+	self.m_coinText:setString(coin);
 end
 
 return RoomScene;
