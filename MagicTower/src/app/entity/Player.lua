@@ -2,7 +2,26 @@ local Person = require("app.entity.Person");
 
 local Player = class("Player",Person);
 
-function Player:ctor()
+Player.ACTION_ADD_KEY = "action_addkey";
+Player.ACTION_CONSUME_KEY = "action_consumekey";
+
+Player.ACTION_ADD_LIFE = "action_addlife";
+Player.ACTION_MINUS_LIFE = "action_minuslife";
+
+Player.ACTION_ADD_ATTACK = "action_addAttack";
+Player.ACTION_MINUS_ATTACK = "action_minusAttack";
+
+Player.ACTION_ADD_DEFENSE = "action_addDefense";
+Player.ACTION_MINUS_DEFENSE = "action_minusDefense";
+
+Player.ACTION_ADD_COIN = "action_addCoin";
+Player.ACTION_MINUS_COIN = "action_minusCoin";
+
+kYellowKey 	= 1; -- 黄钥匙
+kBlueKey 	= 2; -- 蓝钥匙
+kRedKey 	= 3; -- 红钥匙
+
+function Player:ctor(root)
 	Player.super:ctor();
 
 	self.m_upPlayerFile = "actor_up";
@@ -14,6 +33,8 @@ function Player:ctor()
 	self.m_rightId = 1;
 	self.m_downId = 1;
 	self.m_leftId = 1;
+
+	self.m_scene = root;
 
 	self.m_spriteX = 0;
 	self.m_spriteY = 0;
@@ -31,11 +52,26 @@ function Player:ctor()
 	self.m_defense = 100; -- 防御
 	self.m_coin = 0; -- 金币数
 
-	self.m_yellowKeys = 0; -- 黄钥匙数
+	self.m_yellowKeys = 1; -- 黄钥匙数
 	self.m_blueKeys = 0; -- 蓝钥匙数
 	self.m_redKeys = 0; -- 红钥匙数
 
 	self.m_specialProps = {}; -- 特殊物品
+
+	self.m_scene:addEventListener(self.ACTION_ADD_KEY, handler(self,self.onAddKey));
+	self.m_scene:addEventListener(self.ACTION_CONSUME_KEY, handler(self,self.onConsumeKey));
+
+	self.m_scene:addEventListener(self.ACTION_ADD_LIFE, handler(self,self.onAddLife));
+	self.m_scene:addEventListener(self.ACTION_MINUS_LIFE, handler(self,self.onMinusLife));
+
+	self.m_scene:addEventListener(self.ACTION_ADD_ATTACK, handler(self,self.onAddAttack));
+	self.m_scene:addEventListener(self.ACTION_MINUS_ATTACK, handler(self,self.onMinusAttack));
+
+	self.m_scene:addEventListener(self.ACTION_ADD_DEFENSE, handler(self,self.onAddDefense));
+	self.m_scene:addEventListener(self.ACTION_MINUS_DEFENSE, handler(self,self.onMinusDefense));
+
+	self.m_scene:addEventListener(self.ACTION_ADD_COIN, handler(self,self.onAddCoin));
+	self.m_scene:addEventListener(self.ACTION_MINUS_COIN, handler(self,self.onMinusCoin));
 end
 
 -- 帧动画
@@ -274,12 +310,6 @@ function Player:getYelloKeys()
 	return self.m_yellowKeys;
 end
 
-function Player:consumeYelloKey()
-	if self.m_yellowKeys > 0 then 
-		self.m_yellowKeys = self.m_yellowKeys - 1;
-	end
-end
-
 function Player:setBlueKeys(blueKey)
 	self.m_blueKeys = self.m_blueKeys + blueKey;
 end
@@ -288,24 +318,12 @@ function Player:getBlueKeys()
 	return self.m_blueKeys;
 end
 
-function Player:consumeBlueKey()
-	if self.m_blueKeys > 0 then 
-		self.m_blueKeys = self.m_blueKeys - 1;
-	end
-end
-
 function Player:setRedKeys(redKey)
 	self.m_redKeys = self.m_redKeys + redKey;
 end
 
 function Player:getRedKeys()
 	return self.m_redKeys;
-end
-
-function Player:consumeRedKey()
-	if self.m_redKeys > 0 then 
-		self.m_redKeys = self.m_redKeys - 1;
-	end
 end
 
 function Player:setProp(prop)
@@ -329,79 +347,6 @@ function Player:setDirection(direction)
 	self.m_sprite:setTexture("actors/actor_" .. direction .. "1.png" );
 end
 
-function Player:attack(root,x,y,enemy)
-	if tonumber(self.m_attack < enemy.m_defense) then 
-		-- 不能打
-		print("打不过，毋庸置疑")
-		return false;
-	end
-
-	self.m_isAttacked = true;
-
-	self.m_isFirstOrNot = true;
-
-	local attackCallBack = function()
-		-- 第一个打的是人
-		if self.m_isFirstOrNot then 
-			local attackLife = self.m_attack - enemy.m_defense;
-			
-			if attackLife <= 0 then 
-				attackLife = 0;
-			end
-
-			enemy.m_life = enemy.m_life - attackLife;
-
-			if enemy.m_life < 0 then 
-				enemy.m_life = 0;
-			end
-
-			local explosion = cc.ParticleFireworks:create();
-			explosion:pos(x+16,y)
-			-- explosion:setAnchorPoint(cc.p(0,0))
-			explosion:setAutoRemoveOnFinish(true);
-			explosion:setTotalParticles(30);
-			-- explosion:setLife(1.0);
-			explosion:setDuration(1);
-
-			explosion:addTo(root);
-		else
-			
-			local needLife = enemy.m_attack - self.m_defense;
-			if needLife <= 0 then 
-				needLife = 0;
-			end
-			self.m_life = self.m_life - needLife;
-
-		end
-
-		if self.m_life <= 0 then 
-			self.m_life = 0;
-			print("you died")
-			self.m_sprite:stopAllActions();
-			self.m_isAttacked = false;
-		end
-
-		if enemy.m_life <= 0 then 
-			enemy.m_life = 0;
-			print("enemy died");
-			self.m_sprite:stopAllActions();
-			enemy:died();
-			self.m_isAttacked = false;
-		end
-
-		print("m_life:" .. self.m_life)
-		print("other_life" .. enemy.m_life);
-		self.m_isFirstOrNot = not self.m_isFirstOrNot;
-	end
-
-	local callFunc = cc.CallFunc:create(function()
-		attackCallBack();
-	end);
-
-	self.m_sprite:runAction(cc.RepeatForever:create(cc.Sequence:create(cc.DelayTime:create(1),callFunc)));
-
-end
-
 --深度拷贝一个table
 function publ_deepcopy(object)
 	local lookup_table = {}
@@ -420,5 +365,194 @@ function publ_deepcopy(object)
 	end
 	return _copy(object)
 end
+
+--------------------------------------------事件--------------------------------------------------------
+-- 加钥匙
+function Player:onAddKey(event)
+	if event.style == kYellowKey then 
+		self.m_yellowKeys = self.m_yellowKeys + event.value;
+		if self.m_scene then 
+			self.m_scene:updateYellowKey();
+		end
+
+	elseif event.style == kBlueKey then 
+		self.m_blueKeys = self.m_blueKeys + event.value;
+
+		if self.m_scene then 
+			self.m_scene.updateBlueKey();
+		end
+
+	elseif event.style == kRedKey then 
+		self.m_redKeys = self.m_redKeys + event.value;
+
+		if self.m_scene then 
+			self.m_scene.updateRedKey();
+		end
+	end
+end
+
+-- 消耗钥匙
+function Player:onConsumeKey(event)
+	if event.style == kYellowKey then 
+		if self.m_yellowKeys > 0 then 
+			self.m_yellowKeys = self.m_yellowKeys - event.value;
+		end
+
+		if self.m_yellowKeys < 0 then 
+			self.m_yellowKeys = 0;
+		end
+
+		if self.m_scene then 
+			self.m_scene:updateYellowKey();
+		end
+
+	elseif event.style == kBlueKey then 
+		if self.m_blueKeys > 0 then 
+			self.m_blueKeys = self.m_blueKeys - event.value;
+		end
+
+		if self.m_blueKeys < 0 then 
+			self.m_blueKeys = 0;
+		end
+
+		if self.m_scene then 
+			self.m_scene.updateBlueKey();
+		end
+
+	elseif event.style == kRedKey then 
+		if self.m_redKeys > 0 then 
+			self.m_redKeys = self.m_redKeys - event.value;
+		end
+
+		if self.m_redKeys < 0 then 
+			self.m_redKeys = 0;
+		end
+
+		if self.m_scene then 
+			self.m_scene.updateRedKey();
+		end
+	end
+end
+
+-- 吃了血瓶，加血
+function Player:onAddLife(event)
+	if event.value then 
+		self.m_life = self.m_life + event.value;
+	end
+
+	if self.m_life < 0 then 
+		self.m_life = 0;
+	end
+
+	if self.m_scene then 
+		self.m_scene:updateLife();
+	end
+end
+
+-- 减血
+function Player:onMinusLife(event)
+	if event.value then 
+		self.m_life = self.m_life - event.value;
+	end
+
+	if self.m_life < 0 then 
+		self.m_life = 0;
+	end
+
+	if self.m_scene then 
+		self.m_scene:updateLife();
+	end
+end
+
+-- 加攻击
+function Player:onAddAttack(event)
+	if event.value then 
+		self.m_attack = self.m_attack + event.value;
+	end
+
+	if self.m_attack < 0 then 
+		self.m_attack = 0;
+	end
+
+	if self.m_scene then 
+		self.m_scene:updateAttack();
+	end
+end
+
+-- 减攻击
+function Player:onMinusAttack(event)
+	if event.value then 
+		self.m_attack = self.m_attack - event.value;
+	end
+
+	if self.m_attack < 0 then 
+		self.m_attack = 0;
+	end
+
+	if self.m_scene then 
+		self.m_scene:updateAttack();
+	end
+end
+
+-- 加防御
+function Player:onAddDefense(event)
+	if event.value then 
+		self.m_defense = self.m_defense + event.value;
+	end
+
+	if self.m_defense < 0 then 
+		self.m_defense = 0;
+	end
+
+	if self.m_scene then 
+		self.m_scene:updateDefense();
+	end
+end
+
+-- 减攻击
+function Player:onMinusDefense(event)
+	if event.value then 
+		self.m_defense = self.m_defense - event.value;
+	end
+
+	if self.m_defense < 0 then 
+		self.m_defense = 0;
+	end
+
+	if self.m_scene then 
+		self.m_scene:updateDefense();
+	end
+end
+
+-- 加金币
+function Player:onAddCoin(event)
+	if event.value then 
+		self.m_coin = self.m_coin + event.value;
+	end
+
+	if self.m_coin < 0 then 
+		self.m_coin = 0;
+	end
+
+	if self.m_scene then 
+		self.m_scene:updateCoin();
+	end
+end
+
+-- 减金币
+function Player:onMinusCoin(event)
+	if event.value then 
+		self.m_coin = self.m_coin - event.value;
+	end
+
+	if self.m_coin < 0 then 
+		self.m_coin = 0;
+	end
+
+	if self.m_scene then 
+		self.m_scene:updateCoin();
+	end
+end
+
 
 return Player;	

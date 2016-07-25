@@ -243,6 +243,7 @@
   <object gid="9" x="96" y="352"/>
   <object gid="9" x="64" y="256"/>
   <object gid="9" x="256" y="128"/>
+  <object gid="9" x="64" y="128"/>
  </objectgroup>
  <objectgroup name="skeleton A" width="13" height="13">
   <object gid="15" x="64" y="320"/>
