@@ -285,9 +285,12 @@ function RoomScene:createRightContent()
 	-- 创建道具列表
 	self:createProp();
 
+<<<<<<< HEAD
 	-- 创建Enemy列表
 	self:createEnemy();
 
+=======
+>>>>>>> ed65a62ce13ae436ef639be70256dcbbbbcd54b8
 end
 
 -- 创建道具
@@ -308,11 +311,15 @@ function RoomScene:createProp()
 									w, h /4);
 	self.m_propBg:addTo(self);
 
+<<<<<<< HEAD
 
 
 end
 
 function RoomScene:createEnemy()
+=======
+	
+>>>>>>> ed65a62ce13ae436ef639be70256dcbbbbcd54b8
 
 end
 
@@ -761,6 +768,7 @@ function RoomScene:logic(direction)
 		self:attack(self.m_colmap[x * y + x],x,y);
 	end
 
+
 	return true;
 end
 
@@ -788,13 +796,6 @@ function RoomScene:attack(enemy,x,y)
 	local attackLife = self.m_player.m_attack - enemy.m_defense;
 
 	local count = math.floor(enemy.m_life/attackLife);
-
-	-- if tonumber(self.m_player.m_attack) < tonumber(enemy.m_defense) or 
-	-- 	tonumber(self.m_player.m_life) - tonumber(attackLife) * count <= 0 then 
-	-- 	-- 不能打
-	-- 	self.m_messageText:setString(Message.ATTACK_NOT_BEAT);
-	-- 	return false;
-	-- end
 
 	if self.m_isLifeAction then 
 		self.m_isLifeAction = false;
