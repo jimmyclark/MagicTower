@@ -48,13 +48,13 @@ function Player:ctor(root)
 	self.m_direction = "up"; -- 向上
 
 	self.m_life = 1000; -- 血
-	self.m_attack = 20; -- 攻击
-	self.m_defense = 20; -- 防御
+	self.m_attack = 10; -- 攻击
+	self.m_defense = 10; -- 防御
 	self.m_coin = 0; -- 金币数
 
-	self.m_yellowKeys = 1; -- 黄钥匙数
-	self.m_blueKeys = 0; -- 蓝钥匙数
-	self.m_redKeys = 0; -- 红钥匙数
+	self.m_yellowKeys = 10; -- 黄钥匙数
+	self.m_blueKeys = 10; -- 蓝钥匙数
+	self.m_redKeys = 10; -- 红钥匙数
 
 	self.m_specialProps = {}; -- 特殊物品
 
@@ -161,12 +161,14 @@ function Player:onLeftClick(callBack)
 end
 
 function Player:toString()
-	print("player-> life:" .. self.m_life .. "\t attack:" .. self.m_attack .. "\t defense:" .. self.m_defense 
+	local msg = "player-> life:" .. self.m_life .. "\t attack:" .. self.m_attack .. "\t defense:" .. self.m_defense 
 		.. "\t yellowKeys:" .. self.m_yellowKeys .. "\t blueKeys:" .. self.m_blueKeys .. "\t redKeys:" .. self.m_redKeys .. "\n道具:"
-		);
+		
 	for i = 1,#self.m_specialProps do 
-		print(self.m_specialProps[i].m_name)
+		msg = msg .. (self.m_specialProps[i].m_name)
 	end
+
+	return msg;
 end
 
 function Player:onRightClick(callBack)
@@ -445,7 +447,7 @@ function Player:onAddLife(event)
 	end
 
 	if self.m_scene then 
-		self.m_scene:updateLife();
+		self.m_scene:updateLife(self.ACTION_ADD_LIFE);
 	end
 end
 
@@ -455,12 +457,12 @@ function Player:onMinusLife(event)
 		self.m_life = self.m_life - event.value;
 	end
 
-	if self.m_life < 0 then 
+	if self.m_life <= 0 then 
 		self.m_life = 0;
 	end
 
 	if self.m_scene then 
-		self.m_scene:updateLife();
+		self.m_scene:updateLife(self.ACTION_MINUS_LIFE);
 	end
 end
 
@@ -475,7 +477,7 @@ function Player:onAddAttack(event)
 	end
 
 	if self.m_scene then 
-		self.m_scene:updateAttack();
+		self.m_scene:updateAttack(self.ACTION_ADD_ATTACK);
 	end
 end
 
@@ -490,7 +492,7 @@ function Player:onMinusAttack(event)
 	end
 
 	if self.m_scene then 
-		self.m_scene:updateAttack();
+		self.m_scene:updateAttack(self.ACTION_MINUS_ATTACK);
 	end
 end
 
@@ -505,7 +507,7 @@ function Player:onAddDefense(event)
 	end
 
 	if self.m_scene then 
-		self.m_scene:updateDefense();
+		self.m_scene:updateDefense(self.ACTION_ADD_DEFENSE);
 	end
 end
 
@@ -520,7 +522,7 @@ function Player:onMinusDefense(event)
 	end
 
 	if self.m_scene then 
-		self.m_scene:updateDefense();
+		self.m_scene:updateDefense(self.ACTION_MINUS_DEFENSE);
 	end
 end
 
@@ -535,7 +537,7 @@ function Player:onAddCoin(event)
 	end
 
 	if self.m_scene then 
-		self.m_scene:updateCoin();
+		self.m_scene:updateCoin(self.ACTION_ADD_COIN);
 	end
 end
 
@@ -550,7 +552,7 @@ function Player:onMinusCoin(event)
 	end
 
 	if self.m_scene then 
-		self.m_scene:updateCoin();
+		self.m_scene:updateCoin(self.ACTION_MINUS_COIN);
 	end
 end
 

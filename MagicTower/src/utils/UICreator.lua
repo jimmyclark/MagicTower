@@ -21,9 +21,11 @@ function UICreator.createText(text,size,align,x,y,r,g,b,fontName)
             text = text, 
             size = size,
             font = fontName,
-            color = cc.c3b(r,g,b)
+            color = cc.c3b(r,g,b),
+            x = x,
+            y = y
             })
-        :align(align,x, y);
+        :align(align);
     return text;
 end
 
