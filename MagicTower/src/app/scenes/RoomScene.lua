@@ -159,7 +159,6 @@ function RoomScene:createPerson()
 
 	-- Floor
 	self.m_floorTitle = UICreator.createFontText(
-<<<<<<< HEAD
 		"Floor",20,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,self.m_leftX + w/3 + 40 * display.contentScaleFactor ,y ,255,255,0,"fonts/UIFont.fnt");
 	self.m_floorTitle:addTo(self);
 
@@ -168,14 +167,6 @@ function RoomScene:createPerson()
 	-- Floor 1
 	self.m_floorText = UICreator.createText(
 		self.m_currentFloor .. "",35,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,self.m_leftX + w + 60 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-=======
-		"Floor",20,display.CENTER,self.m_leftX + w/2 + 40 * display.contentScaleFactor ,y ,255,255,0,"fonts/UIFont.fnt");
-	self.m_floorTitle:addTo(self);
-
-	-- Floor 1
-	self.m_floorText = UICreator.createText(
-		self.m_currentFloor .. "",35,display.CENTER,self.m_leftX + w/2 + 150 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
->>>>>>> a631a3469e2bf5005f42f298cd1c192c9c9aa9c2
 	self.m_floorText:addTo(self);
 
 	h = self.m_floorTitle:getContentSize().height;
@@ -190,11 +181,7 @@ function RoomScene:createPerson()
 
 	local lifeText = self.m_player:getLife();
 	self.m_lifeText = UICreator.createText(
-<<<<<<< HEAD
 		lifeText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-=======
-		lifeText,25,display.CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
->>>>>>> a631a3469e2bf5005f42f298cd1c192c9c9aa9c2
 	self.m_lifeText:addTo(self);
 
 	h = self.m_lifeText:getContentSize().height;
@@ -208,11 +195,7 @@ function RoomScene:createPerson()
 
 	local attackText = self.m_player:getAttack();
 	self.m_attackText = UICreator.createText(
-<<<<<<< HEAD
 			attackText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-=======
-			attackText,25,display.CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
->>>>>>> a631a3469e2bf5005f42f298cd1c192c9c9aa9c2
 	self.m_attackText:addTo(self);
 
 	y = y - h * 1.2 ;
@@ -224,11 +207,7 @@ function RoomScene:createPerson()
 
 	local defenseText = self.m_player:getDefense();
 	self.m_defenseText = UICreator.createText(
-<<<<<<< HEAD
 		defenseText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-=======
-		defenseText,25,display.CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
->>>>>>> a631a3469e2bf5005f42f298cd1c192c9c9aa9c2
 	self.m_defenseText:addTo(self);
 
 	y = y - h * 1.2 ;
@@ -240,11 +219,7 @@ function RoomScene:createPerson()
 
 	local coinText = self.m_player:getCoin();
 	self.m_coinText = UICreator.createText(
-<<<<<<< HEAD
 		coinText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-=======
-		coinText,25,display.CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
->>>>>>> a631a3469e2bf5005f42f298cd1c192c9c9aa9c2
 	self.m_coinText:addTo(self);	
 
 	y = y - h * 1.5 ;
@@ -258,11 +233,7 @@ function RoomScene:createPerson()
 
 	local yellowText = self.m_player:getYelloKeys();
 	self.m_yellowText = UICreator.createText(
-<<<<<<< HEAD
 		yellowText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 30 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
-=======
-		yellowText,25,display.CENTER,x + 30 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
->>>>>>> a631a3469e2bf5005f42f298cd1c192c9c9aa9c2
 	self.m_yellowText:addTo(self);	
 
 	x = self.m_leftX + w * 0.8;
@@ -274,11 +245,7 @@ function RoomScene:createPerson()
 
 	local blueText = self.m_player:getBlueKeys();
 	self.m_blueText = UICreator.createText(
-<<<<<<< HEAD
 		blueText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 30 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
-=======
-		blueText,25,display.CENTER,x + 30 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
->>>>>>> a631a3469e2bf5005f42f298cd1c192c9c9aa9c2
 	self.m_blueText:addTo(self);
 
 	x = self.m_leftX + w * 1.4;
@@ -290,11 +257,7 @@ function RoomScene:createPerson()
 
 	local redText = self.m_player:getRedKeys();
 	self.m_redText = UICreator.createText(
-<<<<<<< HEAD
 		redText,25,cc.VERTICAL_TEXT_ALIGNMENT_CENTER,x + 30 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
-=======
-		redText,25,display.CENTER,x + 30 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
->>>>>>> a631a3469e2bf5005f42f298cd1c192c9c9aa9c2
 	self.m_redText:addTo(self);		
 
 	y = y - h * 1.5 ;
@@ -730,11 +693,7 @@ function RoomScene:logic(direction)
 	self:onDirectionClick(direction);	
 
 	if self.m_colmap[x * y + x] and self.m_colmap[x*y + x].m_enemyId and tonumber(self.m_colmap[x * y + x].m_enemyId) > 0 then 
-<<<<<<< HEAD
 		self:attack(self.m_player,self.m_colmap[x * y + x],x,y);
-=======
-		self:attack(self.m_player,self.m_colmap[x * y + x]);
->>>>>>> a631a3469e2bf5005f42f298cd1c192c9c9aa9c2
 	end
 
 	return true;
@@ -837,9 +796,33 @@ function RoomScene:attack(player,enemy,x,y)
 end
 
 
-function RoomScene:updateYellowKey()
+function RoomScene:updateYellowKey(action)
+	local nowKey = self.m_yellowText:getString();
 	local yellowKeys = self.m_player:getYelloKeys();
-	self.m_yellowText:setString(yellowKeys);
+
+	local i = nowKey;
+
+	local callFunc = cc.CallFunc:create(function()
+		if action == Player.ACTION_ADD_KEY then 
+			i = i + 1;
+		else
+			i = i - 1;
+		end
+
+		if i < 0 then
+			i = 0; 
+		end
+
+		self.m_yellowText:stopAllActions();
+
+		self.m_yellowText:setString(i);
+
+	end);
+
+	local time = 2 / (yellowKeys - nowKey); 
+	self.m_yellowText:runAction(cc.RepeatForever:create(cc.Sequence:create(cc.DelayTime:create(time),callFunc)))
+
+	
 end
 
 function RoomScene:updateBlueKey()

@@ -372,21 +372,21 @@ function Player:onAddKey(event)
 	if event.style == kYellowKey then 
 		self.m_yellowKeys = self.m_yellowKeys + event.value;
 		if self.m_scene then 
-			self.m_scene:updateYellowKey();
+			self.m_scene:updateYellowKey(self.ACTION_ADD_KEY);
 		end
 
 	elseif event.style == kBlueKey then 
 		self.m_blueKeys = self.m_blueKeys + event.value;
 
 		if self.m_scene then 
-			self.m_scene.updateBlueKey();
+			self.m_scene.updateBlueKey(self.ACTION_ADD_KEY);
 		end
 
 	elseif event.style == kRedKey then 
 		self.m_redKeys = self.m_redKeys + event.value;
 
 		if self.m_scene then 
-			self.m_scene.updateRedKey();
+			self.m_scene.updateRedKey(self.ACTION_ADD_KEY);
 		end
 	end
 end
@@ -403,7 +403,7 @@ function Player:onConsumeKey(event)
 		end
 
 		if self.m_scene then 
-			self.m_scene:updateYellowKey();
+			self.m_scene:updateYellowKey(self.ACTION_CONSUME_KEY);
 		end
 
 	elseif event.style == kBlueKey then 
@@ -416,7 +416,7 @@ function Player:onConsumeKey(event)
 		end
 
 		if self.m_scene then 
-			self.m_scene.updateBlueKey();
+			self.m_scene.updateBlueKey(self.ACTION_CONSUME_KEY);
 		end
 
 	elseif event.style == kRedKey then 
@@ -429,7 +429,7 @@ function Player:onConsumeKey(event)
 		end
 
 		if self.m_scene then 
-			self.m_scene.updateRedKey();
+			self.m_scene.updateRedKey(self.ACTION_CONSUME_KEY);
 		end
 	end
 end
