@@ -304,11 +304,10 @@ function RoomScene:createProp()
 	self.m_propTitle:addTo(self.m_rightBg);
 
 	local height = h - 160 * display.contentScaleFactor;
-
 	-- prop bg
-	self.m_propBg = UICreator.createImg("hud.png",true,w/2 + 1 * display.contentScaleFactor, height,
-									w, h/4);
-	self.m_propBg:addTo(self.m_rightBg);
+	self.m_propBg = UICreator.createImg("hud.png",true,display.cx + w * 1.5 + 1 * display.contentScaleFactor, self.m_rightY - 150 * display.contentScaleFactor,
+									w, h /4);
+	self.m_propBg:addTo(self);
 
 	-- Prop Page
 	local viewRect = cc.rect(10*display.contentScaleFactor,0,w,h/4);
@@ -332,11 +331,7 @@ function RoomScene:createProp()
         self.m_propList:addItem(item)        
     end
 
-    -- pageView不响应事件
-    self.m_propList:setTouchSwallowEnabled(true);
     self.m_propList:reload();
-
-    self.m_rightY = self.m_rightY - 150 * display.contentScaleFactor - viewRect.height;
 
 end
 
@@ -407,7 +402,6 @@ function RoomScene:createEnemy()
     self.m_enemyDefenseText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 110 * display.contentScaleFactor
     	,h,128,128,128);
     self.m_enemyDefenseText:addTo(self.m_rightBg);
-
 end
 
 function RoomScene:onEnter()
@@ -905,6 +899,8 @@ function RoomScene:attack(enemy,x,y)
 
 	if tonumber(enemy.m_life) - tonumber(attackLife) <= 0 then 
 		self.m_messageText:setString(string.format(Message.ATTACK_SUCCESS,self.m_colmap[x * y + x].m_name,enemy.m_coin));
+		enemy.m_life = 0;
+		self:updateEnemy(enemy);
 		enemy:died();
 		self.m_player.m_isAttacked = false;
 		self:dispatchEvent({name = Player.ACTION_ADD_COIN,value = enemy.m_coin});
