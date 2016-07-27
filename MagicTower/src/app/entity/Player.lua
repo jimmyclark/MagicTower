@@ -48,15 +48,18 @@ function Player:ctor(root)
 	self.m_direction = "up"; -- 向上
 
 	self.m_life = 1000; -- 血
-	self.m_attack = 10; -- 攻击
-	self.m_defense = 10; -- 防御
+	self.m_attack = 100; -- 攻击
+	self.m_defense = 100; -- 防御
 	self.m_coin = 0; -- 金币数
 
 	self.m_yellowKeys = 10; -- 黄钥匙数
 	self.m_blueKeys = 10; -- 蓝钥匙数
 	self.m_redKeys = 10; -- 红钥匙数
 
-	self.m_specialProps = {}; -- 特殊物品
+	local shengSwallowProp = ShengSwallowProp.new();
+	local shengShieldProp = ShengShieldProp.new();
+
+	self.m_specialProps = {shengSwallowProp,shengShieldProp}; -- 特殊物品
 
 	self.m_scene:addEventListener(self.ACTION_ADD_KEY, handler(self,self.onAddKey));
 	self.m_scene:addEventListener(self.ACTION_CONSUME_KEY, handler(self,self.onConsumeKey));

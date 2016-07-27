@@ -2,7 +2,7 @@ Quick-Cocos2d-x C++ support ready.
 
 ------------------------------------------------
 
-LOAD LUA FILE: D:/Brick_quick/MagicTower/src/main.lua
+LOAD LUA FILE: E:/MagicTower/MagicTower/MagicTower/src/main.lua
 
 ------------------------------------------------
 
@@ -24,7 +24,7 @@ LOAD LUA FILE: D:/Brick_quick/MagicTower/src/main.lua
 
 [LUA-print] [INFO] # device.language              = cn
 
-[LUA-print] [INFO] # device.writablePath          = D:\Brick_quick\MagicTower\
+[LUA-print] [INFO] # device.writablePath          = E:\MagicTower\MagicTower\MagicTower\
 
 [LUA-print] [INFO] # device.directorySeparator    = \
 
@@ -34,35 +34,35 @@ LOAD LUA FILE: D:/Brick_quick/MagicTower/src/main.lua
 
 [LUA-print] [INFO] # CONFIG_SCREEN_AUTOSCALE      = FIXED_HEIGHT
 
-[LUA-print] [INFO] # CONFIG_SCREEN_WIDTH          = 960.00
+[LUA-print] [INFO] # CONFIG_SCREEN_WIDTH          = 1066.67
 
 [LUA-print] [INFO] # CONFIG_SCREEN_HEIGHT         = 640.00
 
-[LUA-print] [INFO] # display.widthInPixels        = 960.00
+[LUA-print] [INFO] # display.widthInPixels        = 800.00
 
-[LUA-print] [INFO] # display.heightInPixels       = 640.00
+[LUA-print] [INFO] # display.heightInPixels       = 480.00
 
-[LUA-print] [INFO] # display.contentScaleFactor   = 1.00
+[LUA-print] [INFO] # display.contentScaleFactor   = 0.75
 
-[LUA-print] [INFO] # display.width                = 960.00
+[LUA-print] [INFO] # display.width                = 1066.67
 
 [LUA-print] [INFO] # display.height               = 640.00
 
-[LUA-print] [INFO] # display.cx                   = 480.00
+[LUA-print] [INFO] # display.cx                   = 533.33
 
 [LUA-print] [INFO] # display.cy                   = 320.00
 
 [LUA-print] [INFO] # display.left                 = 0.00
 
-[LUA-print] [INFO] # display.right                = 960.00
+[LUA-print] [INFO] # display.right                = 1066.67
 
 [LUA-print] [INFO] # display.top                  = 640.00
 
 [LUA-print] [INFO] # display.bottom               = 0.00
 
-[LUA-print] [INFO] # display.c_left               = -480.00
+[LUA-print] [INFO] # display.c_left               = -533.33
 
-[LUA-print] [INFO] # display.c_right              = 480.00
+[LUA-print] [INFO] # display.c_right              = 533.33
 
 [LUA-print] [INFO] # display.c_top                = 320.00
 
@@ -75,4 +75,6 @@ cocos2d: padding: 0,0,0,0
 [LUA-print] go to roomScene
 
 cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [60] to [81].
+
+[LUA-print] 还有逻辑在处理
 

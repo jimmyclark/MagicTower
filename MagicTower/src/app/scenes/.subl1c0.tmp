@@ -294,21 +294,22 @@ end
 
 -- 创建道具
 function RoomScene:createProp()
+	local width = self.m_map:getContentSize().width;
+	local height = self.m_map:getContentSize().height;
+
 	local w = self.m_rightBg:getContentSize().width;
 	local h = self.m_rightBg:getContentSize().height;	
 
 	-- Prop
 	self.m_propTitle = UICreator.createFontText(
-		"Prop",20,cc.ui.TEXT_ALIGN_CENTER,w/2,h,255,255,0,"fonts/UIFont.fnt");
+		"Prop",20,cc.ui.TEXT_ALIGN_CENTER,display.cx + w * 1.5 ,self.m_rightY  ,255,255,0,"fonts/UIFont.fnt");
 	self.m_propTitle:setAnchorPoint(cc.p(0.5,1))
-	self.m_propTitle:addTo(self.m_rightBg);
-
-	local height = h - 160 * display.contentScaleFactor;
+	self.m_propTitle:addTo(self);
 
 	-- prop bg
-	self.m_propBg = UICreator.createImg("hud.png",true,w/2 + 1 * display.contentScaleFactor, height,
-									w, h/4);
-	self.m_propBg:addTo(self.m_rightBg);
+	self.m_propBg = UICreator.createImg("hud.png",true,display.cx + w * 1.5 + 1 * display.contentScaleFactor, self.m_rightY - 150 * display.contentScaleFactor,
+									w, h /4);
+	self.m_propBg:addTo(self);
 
 	-- Prop Page
 	local viewRect = cc.rect(10*display.contentScaleFactor,0,w,h/4);
@@ -336,77 +337,13 @@ function RoomScene:createProp()
     self.m_propList:setTouchSwallowEnabled(true);
     self.m_propList:reload();
 
-    self.m_rightY = self.m_rightY - 150 * display.contentScaleFactor - viewRect.height;
-
+    -- Enemy
+    self.m_enemyTitle = UICreator.createFontText(
+    	"Enemy",20,cc.ui.TEXT_ALIGN_CENTER,display.cx + w * 1.5,self.m_rightY,255,255,0,"fonts/UIFont.fnt");
+    self.m_enemyTitle:addTo(self);
 end
 
 function RoomScene:createEnemy()
-	local w = self.m_rightBg:getContentSize().width;
-	local h = self.m_rightBg:getContentSize().height/2;	
-
-    self.m_enemyTitle = UICreator.createFontText(
-    	"Enemy",20,cc.ui.TEXT_ALIGN_CENTER,w/2,h,255,255,0,"fonts/UIFont.fnt");
-    self.m_enemyTitle:addTo(self.m_rightBg);
-
-    h = h - 70 * display.contentScaleFactor;
-
-    -- iconBg
-    self.m_enemyIconMask = display.newSprite("headMask.png");
-    self.m_enemyIconMask:pos(w/2,h)
-    self.m_enemyIconMask:scale(0.5);
-    self.m_enemyIconMask:addTo(self.m_rightBg);
-
-    self.m_enemyIcon = display.newSprite("blank.png");
-    self.m_enemyIcon:pos(w/2 - 2 * display.contentScaleFactor,h + 3 * display.contentScaleFactor)
-    self.m_enemyIcon:addTo(self.m_rightBg);
-
- 	h = h - 50 * display.contentScaleFactor;
-
-    -- Name
-    self.m_enemyNameTitle = UICreator.createText("Name:",20,cc.ui.TEXT_ALIGN_CENTER,w/3
-     ,h,255,255,255);
-    self.m_enemyNameTitle:addTo(self.m_rightBg);
-
-    -- EnemyName Text
-    self.m_enemyNameText = UICreator.createText("",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 110 * display.contentScaleFactor
-    	,h,128,128,128);
-    self.m_enemyNameText:addTo(self.m_rightBg);
-
-    h = h - 40 * display.contentScaleFactor;
-
-    -- Life
-    self.m_enemyLifeTitle = UICreator.createText("Life:",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 3 * display.contentScaleFactor
-     ,h,255,255,255);
-    self.m_enemyLifeTitle:addTo(self.m_rightBg);
-
-     -- Life Text
-    self.m_enemyLifeText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 110 * display.contentScaleFactor
-    	,h,128,128,128);
-    self.m_enemyLifeText:addTo(self.m_rightBg);
-
-    h = h - 40 * display.contentScaleFactor;
-
-    -- Attack
-    self.m_enemyAttackTitle = UICreator.createText("Attack:",20,cc.ui.TEXT_ALIGN_CENTER,w/3 - 3 * display.contentScaleFactor
-     ,h,255,255,255);
-    self.m_enemyAttackTitle:addTo(self.m_rightBg);
-
-     -- Attack Text
-    self.m_enemyAttackText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 110 * display.contentScaleFactor
-    	,h,128,128,128);
-    self.m_enemyAttackText:addTo(self.m_rightBg);
-
-     h = h - 40 * display.contentScaleFactor;
-
-    -- Defense
-    self.m_enemyDefenseTitle = UICreator.createText("Defense:",20,cc.ui.TEXT_ALIGN_CENTER,w/3 - 3 * display.contentScaleFactor
-     ,h,255,255,255);
-    self.m_enemyDefenseTitle:addTo(self.m_rightBg);
-
-     -- Defense Text
-    self.m_enemyDefenseText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 110 * display.contentScaleFactor
-    	,h,128,128,128);
-    self.m_enemyDefenseText:addTo(self.m_rightBg);
 
 end
 
@@ -724,7 +661,6 @@ function RoomScene:logic(direction)
 	end
 
 	self.m_messageText:setString("");
-	self:clearEnemy();
 
 	-- 墙壁
 	if self.m_colmap[x * y + x] and self.m_colmap[x * y + x].m_isSolid then 
@@ -825,7 +761,6 @@ function RoomScene:logic(direction)
 		-- 特殊道具
 		elseif self.m_colmap[x * y + x].m_propId > 100 then 
 			self.m_player:setProp(self.m_colmap[x*y + x])
-			self:updatePropList();
 		end
 
 		self.m_player:setDirection(direction);
@@ -840,12 +775,12 @@ function RoomScene:logic(direction)
 
 		local player_attackLife = self.m_player.m_attack - self.m_colmap[x*y + x].m_defense;
 		local player_count = math.ceil(self.m_colmap[x*y + x].m_life / player_attackLife);
+
 		if tonumber(self.m_player.m_attack) < tonumber(self.m_colmap[x * y + x].m_defense) or 
-			enemy_count - player_count <= 0 and enemy_count > 0 then 
+			enemy_count - player_count <= 0 then 
 			-- 不能打
 			self.m_messageText:setString(Message.ATTACK_NOT_BEAT);
 			self.m_player:setDirection(direction);
-			self:updateEnemy(self.m_colmap[x * y + x]);
 			self.m_isLogic = false;
 			return;
 		end
@@ -854,11 +789,7 @@ function RoomScene:logic(direction)
 	self:onDirectionClick(direction);	
 	
 	if self.m_colmap[x * y + x] and self.m_colmap[x*y + x].m_enemyId and tonumber(self.m_colmap[x * y + x].m_enemyId) > 0 then 
-		local callFunc = cc.CallFunc:create(function()
-			self:attack(self.m_colmap[x * y + x],x,y);
-		end);
-
-		self:runAction(cc.Sequence:create(cc.DelayTime:create(1),callFunc));
+		self:attack(self.m_colmap[x * y + x],x,y);
 	end
 
 
@@ -887,8 +818,6 @@ end
 
 function RoomScene:attack(enemy,x,y)
 	local attackLife = self.m_player.m_attack - enemy.m_defense;
-
-	self:updateEnemy(enemy);
 
 	local count = math.floor(enemy.m_life/attackLife);
 
@@ -929,7 +858,6 @@ function RoomScene:attack(enemy,x,y)
 			end
 
 
-
 			local explosion = cc.ParticleFireworks:create();
 			explosion:pos(x+16,y)
 			-- explosion:setAnchorPoint(cc.p(0,0))
@@ -939,8 +867,6 @@ function RoomScene:attack(enemy,x,y)
 			explosion:setDuration(1);
 
 			explosion:addTo(self.m_map);
-
-			self:updateEnemy(enemy);
 
 			if enemy.m_life <= 0 then 
 				enemy.m_life = 0;
@@ -1331,49 +1257,6 @@ function RoomScene:updateCoin(action)
 	local time = 1 / math.abs(coin - nowCoin);
 
 	self.m_coinText:runAction(cc.RepeatForever:create(cc.Sequence:create(cc.DelayTime:create(time),callFunc)));
-end
-
-function RoomScene:updateEnemy(enemy)
-	if not enemy then 
-		return;
-	end
-	self.m_enemyIcon:setTexture("enemy/".. enemy.m_res_anims .. "1.png")
-	self.m_enemyNameText:setString(enemy.m_name);
-	self.m_enemyAttackText:setString(enemy.m_attack);
-	self.m_enemyDefenseText:setString(enemy.m_defense);
-	self.m_enemyLifeText:setString(enemy.m_life);
-
-
-end
-
-function RoomScene:clearEnemy()
-	self.m_enemyIcon:setTexture("blank.png")
-	self.m_enemyNameText:setString("");
-	self.m_enemyAttackText:setString(0);
-	self.m_enemyDefenseText:setString(0);
-	self.m_enemyLifeText:setString(0);
-end
-
-function RoomScene:updatePropList()
-	-- 移除所有项
-	self.m_propList:removeAllItems();
-
-	 -- add items
-    for i=1,#self.m_player.m_specialProps do
-        local item = self.m_propList:newItem();
-        local content
-
-        local prop = self.m_player.m_specialProps[i];
-        content = UICreator.createBtnText(prop.m_res,true,0,0,display.CENTER);
-		content:onButtonClicked(function(event)
-			print(prop.m_propId);
-		end);
- 
-        item:addChild(content)
-        self.m_propList:addItem(item)        
-    end
-
-	self.m_propList:reload();
 end
 
 return RoomScene;
