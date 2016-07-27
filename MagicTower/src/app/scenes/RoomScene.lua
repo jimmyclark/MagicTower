@@ -29,6 +29,9 @@ GreenSlime = require("app.entity.monster.primary_enemy.GreenSlime")
 SkeletonA = require("app.entity.monster.primary_enemy.SkeletonA")
 SkeletonB = require("app.entity.monster.primary_enemy.SkeletonB")
 
+ShengSwallowProp = require("app.entity.prop.ShengSwallowProp");
+ShengShieldProp = require("app.entity.prop.ShengShieldProp");
+
 Message = require("app.message.Message");
 
 Player = require("app.entity.Player")
@@ -285,12 +288,8 @@ function RoomScene:createRightContent()
 	-- 创建道具列表
 	self:createProp();
 
-<<<<<<< HEAD
 	-- 创建Enemy列表
 	self:createEnemy();
-
-=======
->>>>>>> ed65a62ce13ae436ef639be70256dcbbbbcd54b8
 end
 
 -- 创建道具
@@ -311,15 +310,35 @@ function RoomScene:createProp()
 									w, h /4);
 	self.m_propBg:addTo(self);
 
-<<<<<<< HEAD
+	-- Prop Page
+	local viewRect = cc.rect(10*display.contentScaleFactor,0,w,h/4);
+	local padding = {left = 20 ,right = 20,top = 0,bottom = 40};
+
+	self.m_propList = UICreator.createPageView(viewRect,3,2,padding,20,20,false);
+	self.m_propList:addTo(self.m_propBg);
+
+    -- add items
+    for i=1,#self.m_player.m_specialProps do
+        local item = self.m_propList:newItem();
+        local content
+
+        local prop = self.m_player.m_specialProps[i];
+        content = UICreator.createBtnText(prop.m_res,true,0,0,display.CENTER);
+		content:onButtonClicked(function(event)
+			print(prop.m_res)
+		end);
+ 
+        item:addChild(content)
+        self.m_propList:addItem(item)        
+    end
+
+    self.m_propList:reload();
+
 
 
 end
 
 function RoomScene:createEnemy()
-=======
-	
->>>>>>> ed65a62ce13ae436ef639be70256dcbbbbcd54b8
 
 end
 
