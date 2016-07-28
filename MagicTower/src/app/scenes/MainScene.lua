@@ -15,14 +15,14 @@ function MainScene:ctor()
 
 	for i=1,#titleNames do
 		local y = math.random(-5,5);
-		self.m_titles[i] = UICreator.createFontText(titleNames[i],40,display.CENTER,display.cx-350+(30*i),display.top-200*screenHScale+y,255,255,0,"fonts/UIFont.fnt");
+		self.m_titles[i] = UICreator.createFontText(titleNames[i],40,display.CENTER,display.cx-350+(30*i),display.top-150*screenHScale+y,255,255,0,"fonts/UIFont.fnt");
     	self.m_titles[i]:addTo(self);
     	self.m_actions[i] = cc.TintBy:create(2, math.random(128,255), math.random(128,255), math.random(128,255));
     	self.m_titles[i]:runAction(cc.RepeatForever:create(self.m_actions[i]));
 	end
 
 	local startGame = UICreator.createText("Start Game",35,display.CENTER,display.cx,display.cy,128,255,128);
-	self.m_startGameBtn = UICreator.createBtnText(nil,false,display.cx,display.top-350*screenHScale,display.CENTER,200,200,startGame,"fonts/arial.fnt");
+	self.m_startGameBtn = UICreator.createBtnText(nil,false,display.cx,display.top-300*screenHScale,display.CENTER,200,200,startGame,"fonts/arial.fnt");
 	self.m_startGameBtn:addTo(self);
 
 	self.m_startGameBtn:onButtonPressed(function(event)
@@ -43,7 +43,7 @@ function MainScene:ctor()
 	end);
 
 	local loadGame = UICreator.createText("Load Game",35,display.CENTER,display.cx,display.cy,128,128,128);
-	self.m_loadGameBtn = UICreator.createBtnText(nil,false,display.cx,display.top-480*screenHScale,display.CENTER,200,200,loadGame,"fonts/arial.fnt");
+	self.m_loadGameBtn = UICreator.createBtnText(nil,false,display.cx,display.top-430*screenHScale,display.CENTER,200,200,loadGame,"fonts/arial.fnt");
 	self.m_loadGameBtn:addTo(self);
 
 	self.m_loadGameBtn:onButtonPressed(function(event)
@@ -63,7 +63,7 @@ function MainScene:ctor()
 	self.m_loadGameBtn:setButtonEnabled(false);
 
 	local rankGame = UICreator.createText("Rank",35,display.CENTER,display.cx,display.cy,128,255,128);
-	self.m_rankBtn = UICreator.createBtnText(nil,false,display.cx,display.top-610*screenHScale,display.CENTER,200,200,rankGame,"fonts/arial.fnt");
+	self.m_rankBtn = UICreator.createBtnText(nil,false,display.cx,display.top-560*screenHScale,display.CENTER,200,200,rankGame,"fonts/arial.fnt");
 	self.m_rankBtn:addTo(self);
 
 	self.m_rankBtn:onButtonPressed(function(event)
@@ -81,7 +81,7 @@ function MainScene:ctor()
 	end);
 
 	local exitGame = UICreator.createText("Exit Game",35,display.CENTER,display.cx,display.cy,128,255,128);
-	self.m_exitGameBtn = UICreator.createBtnText(nil,false,display.cx,display.top-740*screenHScale,display.CENTER,200,200,exitGame,"fonts/arial.fnt");
+	self.m_exitGameBtn = UICreator.createBtnText(nil,false,display.cx,display.top-690*screenHScale,display.CENTER,200,200,exitGame,"fonts/arial.fnt");
 	self.m_exitGameBtn:addTo(self);
 
 	self.m_exitGameBtn:onButtonPressed(function(event)

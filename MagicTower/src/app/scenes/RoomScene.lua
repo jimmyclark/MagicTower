@@ -142,147 +142,138 @@ function RoomScene:createLeftContent()
 	self.m_leftBg = cc.LayerColor:create(cc.c4b(255, 255, 255, 128));
 	local width = self.m_map:getContentSize().width;
 	local height = self.m_map:getContentSize().height;
+
 	self.m_leftBg:setContentSize(width/2,height);
-	self.m_leftBg:setPosition(display.cx - width , display.cy/3 + 7*display.contentScaleFactor);
-	self.m_leftX = display.cx - width;
-	self.m_leftY = display.cy/3 + 7*display.contentScaleFactor + height;
-	self.m_leftBg:setAnchorPoint(cc.p(0.5,0.5))
+	self.m_leftBg:setPosition(display.cx - width , display.cy - height/2);
+	self.m_leftBg:setAnchorPoint(cc.p(0.5,1))
 	self.m_leftBg:addTo(self);
 
 	self:createPerson();
 end
 
 function RoomScene:createPerson()
+	local width = self.m_leftBg:getContentSize().width;
+	local height = self.m_leftBg:getContentSize().height;
+
 	self.m_photo = display.newSprite("user.jpg");
 	local w = self.m_photo:getContentSize().width;
 	local h = self.m_photo:getContentSize().height;
-	local y = self.m_leftY - h /2 - 5*display.contentScaleFactor;
-	self.m_photo:setPosition(self.m_leftX + w, y);
-	self.m_photo:addTo(self);
+	self.m_photo:setAnchorPoint(cc.p(0.5,1))
+	self.m_photo:setPosition(width/2, height);
+	self.m_photo:addTo(self.m_leftBg);
 
-	y = y - h * 5/6;
+	local y = height - h - 40 * display.contentScaleFactor;
 
 	-- Floor
 	self.m_floorTitle = UICreator.createFontText(
-		"Floor",20,cc.ui.TEXT_ALIGN_CENTER,self.m_leftX + w/3 + 40 * display.contentScaleFactor ,y ,255,255,0,"fonts/UIFont.fnt");
-	self.m_floorTitle:addTo(self);
-
-	w = self.m_floorTitle:getContentSize().width;
+		"Floor",20,cc.ui.TEXT_ALIGN_CENTER,width/2 - 20*display.contentScaleFactor,y ,255,255,0,"fonts/UIFont.fnt");
+	self.m_floorTitle:addTo(self.m_leftBg);
 
 	-- Floor 1
 	self.m_floorText = UICreator.createText(
-		self.m_currentFloor .. "",35,cc.ui.TEXT_ALIGN_CENTER,self.m_leftX + w + 60 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-	self.m_floorText:addTo(self);
+		self.m_currentFloor .. "",35,cc.ui.TEXT_ALIGN_CENTER,width/2 + 60 * display.contentScaleFactor,y + 5*display.contentScaleFactor,0,0,0);
+	self.m_floorText:addTo(self.m_leftBg);
 
 	h = self.m_floorTitle:getContentSize().height;
 
-	y = y - h * 3/4;
+	y = y - 40 * display.contentScaleFactor;
 
 	-- Life
 	self.m_lifeIcon = display.newSprite("player/life.png");
-	local x = self.m_leftX + w/2;
-	self.m_lifeIcon:setPosition(x,y + 8 * display.contentScaleFactor);
-	self.m_lifeIcon:addTo(self);
+	self.m_lifeIcon:setPosition(width/2 - 40 * display.contentScaleFactor,y);
+	self.m_lifeIcon:addTo(self.m_leftBg);
 
 	local lifeText = self.m_player:getLife();
 	self.m_lifeText = UICreator.createText(
-		lifeText,25,cc.ui.TEXT_ALIGN_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-	self.m_lifeText:addTo(self);
+		lifeText,25,cc.ui.TEXT_ALIGN_CENTER,width/2 + 10 * display.contentScaleFactor,y,0,0,0);
+	self.m_lifeText:addTo(self.m_leftBg);
 
-	h = self.m_lifeText:getContentSize().height;
-
-	y = y - h * 1.2 ;
+	y = y - 40 * display.contentScaleFactor;
 
 	-- Attack
 	self.m_attackIcon = display.newSprite("player/attack.png");
-	self.m_attackIcon:setPosition(x,y + 8 * display.contentScaleFactor);
-	self.m_attackIcon:addTo(self);
+	self.m_attackIcon:setPosition(width/2 - 40 * display.contentScaleFactor,y);
+	self.m_attackIcon:addTo(self.m_leftBg);
 
 	local attackText = self.m_player:getAttack();
 	self.m_attackText = UICreator.createText(
-			attackText,25,cc.ui.TEXT_ALIGN_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-	self.m_attackText:addTo(self);
+			attackText,25,cc.ui.TEXT_ALIGN_CENTER,width/2 + 10 * display.contentScaleFactor,y,0,0,0);
+	self.m_attackText:addTo(self.m_leftBg);
 
-	y = y - h * 1.2 ;
+	y = y - 40 * display.contentScaleFactor;
 
 	-- Defense
 	self.m_defenseIcon = display.newSprite("player/defense.png");
-	self.m_defenseIcon:setPosition(x,y + 8 * display.contentScaleFactor);
-	self.m_defenseIcon:addTo(self);	
+	self.m_defenseIcon:setPosition(width/2 - 40 * display.contentScaleFactor,y);
+	self.m_defenseIcon:addTo(self.m_leftBg);	
 
 	local defenseText = self.m_player:getDefense();
 	self.m_defenseText = UICreator.createText(
-		defenseText,25,cc.ui.TEXT_ALIGN_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-	self.m_defenseText:addTo(self);
+		defenseText,25,cc.ui.TEXT_ALIGN_CENTER,width/2 + 10 * display.contentScaleFactor,y,0,0,0);
+	self.m_defenseText:addTo(self.m_leftBg);
 
-	y = y - h * 1.2 ;
+	y = y - 40 * display.contentScaleFactor;
 
 	-- 金币
 	self.m_coinIcon = display.newSprite("prop/prop_coin.png");
-	self.m_coinIcon:setPosition(x,y + 8 * display.contentScaleFactor);
-	self.m_coinIcon:addTo(self);	
+	self.m_coinIcon:setPosition(width/2 - 40 * display.contentScaleFactor,y);
+	self.m_coinIcon:addTo(self.m_leftBg);	
 
 	local coinText = self.m_player:getCoin();
 	self.m_coinText = UICreator.createText(
-		coinText,25,cc.ui.TEXT_ALIGN_CENTER,x + 80 * display.contentScaleFactor,y + 8 * display.contentScaleFactor,0,0,0);
-	self.m_coinText:addTo(self);	
+		coinText,25,cc.ui.TEXT_ALIGN_CENTER,width/2 + 10 * display.contentScaleFactor,y,0,0,0);
+	self.m_coinText:addTo(self.m_leftBg);	
 
-	y = y - h * 1.5 ;
-
-	x = self.m_leftX + w * 0.2;
+	y = y - 40 * display.contentScaleFactor;
 
 	-- 黄钥匙
 	self.m_yellowKey = display.newSprite("keys/yellow_key.png");
-	self.m_yellowKey:setPosition(x , y + 8 * display.contentScaleFactor);
-	self.m_yellowKey:addTo(self);
+	self.m_yellowKey:setPosition(width/2 - 70 * display.contentScaleFactor , y);
+	self.m_yellowKey:addTo(self.m_leftBg);
 
 	local yellowText = self.m_player:getYelloKeys();
 	self.m_yellowText = UICreator.createText(
-		yellowText,20,cc.ui.TEXT_ALIGN_CENTER,x + 20 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
-	self.m_yellowText:addTo(self);	
-
-	x = self.m_leftX + w * 0.8;
+		yellowText,20,cc.ui.TEXT_ALIGN_CENTER,width/2 - 50 * display.contentScaleFactor,y,255,0,0);
+	self.m_yellowText:addTo(self.m_leftBg);	
 
 	-- 蓝钥匙
 	self.m_blueKey = display.newSprite("keys/blue_key.png");
-	self.m_blueKey:setPosition(x , y + 8 * display.contentScaleFactor);
-	self.m_blueKey:addTo(self);
+	self.m_blueKey:setPosition(width/2 - 10 * display.contentScaleFactor , y);
+	self.m_blueKey:addTo(self.m_leftBg);
 
 	local blueText = self.m_player:getBlueKeys();
 	self.m_blueText = UICreator.createText(
-		blueText,20,cc.ui.TEXT_ALIGN_CENTER,x + 20 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
-	self.m_blueText:addTo(self);
-
-	x = self.m_leftX + w * 1.4;
+		blueText,20,cc.ui.TEXT_ALIGN_CENTER,width/2 + 10 * display.contentScaleFactor ,y,255,0,0);
+	self.m_blueText:addTo(self.m_leftBg);
 
 	-- 红钥匙
 	self.m_redKey = display.newSprite("keys/red_key.png");
-	self.m_redKey:setPosition(x , y + 8 * display.contentScaleFactor);
-	self.m_redKey:addTo(self);
+	self.m_redKey:setPosition(width/2 + 50 * display.contentScaleFactor , y);
+	self.m_redKey:addTo(self.m_leftBg);
 
 	local redText = self.m_player:getRedKeys();
 	self.m_redText = UICreator.createText(
-		redText,20,cc.ui.TEXT_ALIGN_CENTER,x + 20 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,0,0);
-	self.m_redText:addTo(self);		
+		redText,20,cc.ui.TEXT_ALIGN_CENTER,width/2 + 70 * display.contentScaleFactor , y,255,0,0);
+	self.m_redText:addTo(self.m_leftBg);		
 
-	y = y - h * 1.5 ;
+	y = y - 40 * display.contentScaleFactor;
 
 	-- Message
-	x = self.m_leftX + w;
 	self.m_messageText = UICreator.createText(
-		"",15,cc.ui.TEXT_ALIGN_CENTER, x - 10 * display.contentScaleFactor,y + 4 * display.contentScaleFactor,255,255,255);
-	self.m_messageText:addTo(self);
+		"",15,cc.ui.TEXT_ALIGN_CENTER, width/2,y,255,255,255);
+	self.m_messageText:addTo(self.m_leftBg);
 end
 
 function RoomScene:createRightContent()
 	self.m_rightBg = cc.LayerColor:create(cc.c4b(255, 255, 255, 128));
+
+	local l_width = self.m_leftBg:getContentSize().width;
+	local l_height = self.m_leftBg:getContentSize().height;
 	local width = self.m_map:getContentSize().width;
 	local height = self.m_map:getContentSize().height;
 	self.m_rightBg:setContentSize(width/2,height);
-	self.m_rightBg:setPosition(display.cx + width/2 , display.cy/3 + 7*display.contentScaleFactor);
-	self.m_rightX = display.cx + width;
-	self.m_rightY = display.cy/3 + 7*display.contentScaleFactor + height;
-	self.m_rightBg:setAnchorPoint(cc.p(0.5,0.5))
+	self.m_rightBg:setPosition(display.cx + width/2,  display.cy - height/2);
+	self.m_rightBg:setAnchorPoint(cc.p(0.5,1))
 	self.m_rightBg:addTo(self);
 
 	-- 创建道具列表
@@ -294,7 +285,7 @@ end
 
 -- 创建道具
 function RoomScene:createProp()
-	local w = self.m_rightBg:getContentSize().width;
+	local w = self.m_rightBg:getContentSize().width - 10 * display.contentScaleFactor;
 	local h = self.m_rightBg:getContentSize().height;	
 
 	-- Prop
@@ -303,11 +294,12 @@ function RoomScene:createProp()
 	self.m_propTitle:setAnchorPoint(cc.p(0.5,1))
 	self.m_propTitle:addTo(self.m_rightBg);
 
-	local height = h - 160 * display.contentScaleFactor;
-	-- prop bg
-	self.m_propBg = UICreator.createImg("hud.png",true,display.cx + w * 1.5 + 1 * display.contentScaleFactor, self.m_rightY - 150 * display.contentScaleFactor,
-									w, h /4);
-	self.m_propBg:addTo(self);
+	-- local height = h - 160 * display.contentScaleFactor;
+	local y = h - 60 * display.contentScaleFactor;
+	-- -- prop bg
+	self.m_propBg = UICreator.createImg("hud.png",true,w/2, y,w - 10 * display.contentScaleFactor , h /4);
+	self.m_propBg:addTo(self.m_rightBg);
+	self.m_propBg:setAnchorPoint(cc.p(0.5,1))
 
 	-- Prop Page
 	local viewRect = cc.rect(10*display.contentScaleFactor,0,w,h/4);
@@ -332,18 +324,17 @@ function RoomScene:createProp()
     end
 
     self.m_propList:reload();
-
 end
 
 function RoomScene:createEnemy()
 	local w = self.m_rightBg:getContentSize().width;
-	local h = self.m_rightBg:getContentSize().height/2;	
+	local h = self.m_rightBg:getContentSize().height;	
 
     self.m_enemyTitle = UICreator.createFontText(
-    	"Enemy",20,cc.ui.TEXT_ALIGN_CENTER,w/2,h,255,255,0,"fonts/UIFont.fnt");
+    	"Enemy",20,cc.ui.TEXT_ALIGN_CENTER,w/2,h/2,255,255,0,"fonts/UIFont.fnt");
     self.m_enemyTitle:addTo(self.m_rightBg);
 
-    h = h - 70 * display.contentScaleFactor;
+    h = h/2 - 40 * display.contentScaleFactor;
 
     -- iconBg
     self.m_enemyIconMask = display.newSprite("headMask.png");
@@ -355,7 +346,7 @@ function RoomScene:createEnemy()
     self.m_enemyIcon:pos(w/2 - 2 * display.contentScaleFactor,h + 3 * display.contentScaleFactor)
     self.m_enemyIcon:addTo(self.m_rightBg);
 
- 	h = h - 50 * display.contentScaleFactor;
+ 	h = h - 30 * display.contentScaleFactor;
 
     -- Name
     self.m_enemyNameTitle = UICreator.createText("Name:",20,cc.ui.TEXT_ALIGN_CENTER,w/3
@@ -363,11 +354,11 @@ function RoomScene:createEnemy()
     self.m_enemyNameTitle:addTo(self.m_rightBg);
 
     -- EnemyName Text
-    self.m_enemyNameText = UICreator.createText("",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 110 * display.contentScaleFactor
+    self.m_enemyNameText = UICreator.createText("",18,cc.ui.TEXT_ALIGN_CENTER,w*2/3 + 3 * display.contentScaleFactor
     	,h,128,128,128);
     self.m_enemyNameText:addTo(self.m_rightBg);
 
-    h = h - 40 * display.contentScaleFactor;
+    h = h - 30 * display.contentScaleFactor;
 
     -- Life
     self.m_enemyLifeTitle = UICreator.createText("Life:",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 3 * display.contentScaleFactor
@@ -375,11 +366,11 @@ function RoomScene:createEnemy()
     self.m_enemyLifeTitle:addTo(self.m_rightBg);
 
      -- Life Text
-    self.m_enemyLifeText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 110 * display.contentScaleFactor
+    self.m_enemyLifeText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w*2/3
     	,h,128,128,128);
     self.m_enemyLifeText:addTo(self.m_rightBg);
 
-    h = h - 40 * display.contentScaleFactor;
+    h = h - 30 * display.contentScaleFactor;
 
     -- Attack
     self.m_enemyAttackTitle = UICreator.createText("Attack:",20,cc.ui.TEXT_ALIGN_CENTER,w/3 - 3 * display.contentScaleFactor
@@ -387,11 +378,11 @@ function RoomScene:createEnemy()
     self.m_enemyAttackTitle:addTo(self.m_rightBg);
 
      -- Attack Text
-    self.m_enemyAttackText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 110 * display.contentScaleFactor
+    self.m_enemyAttackText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w*2/3
     	,h,128,128,128);
     self.m_enemyAttackText:addTo(self.m_rightBg);
 
-     h = h - 40 * display.contentScaleFactor;
+     h = h - 30 * display.contentScaleFactor;
 
     -- Defense
     self.m_enemyDefenseTitle = UICreator.createText("Defense:",20,cc.ui.TEXT_ALIGN_CENTER,w/3 - 3 * display.contentScaleFactor
@@ -399,7 +390,7 @@ function RoomScene:createEnemy()
     self.m_enemyDefenseTitle:addTo(self.m_rightBg);
 
      -- Defense Text
-    self.m_enemyDefenseText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w/3 + 110 * display.contentScaleFactor
+    self.m_enemyDefenseText = UICreator.createText("0",20,cc.ui.TEXT_ALIGN_CENTER,w*2/3
     	,h,128,128,128);
     self.m_enemyDefenseText:addTo(self.m_rightBg);
 end
